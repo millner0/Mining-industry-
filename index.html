@@ -1,0 +1,4325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HashCore Mining - Professional Crypto Mining Platform</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- TradingView Widget -->
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    
+    <style>
+        /* ====== ENHANCED CSS ====== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+
+        .loading-content {
+            text-align: center;
+        }
+
+        .mining-animation {
+            width: 100px;
+            height: 100px;
+            border: 4px solid #00ff88;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+            position: relative;
+        }
+
+        .mining-animation::before {
+            content: '⛏️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #00ff88;
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0a0a0a;
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-link:hover {
+            color: #00ff88;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            color: #0a0a0a;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 255, 136, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #00ff88;
+            border: 2px solid #00ff88;
+        }
+
+        .btn-secondary:hover {
+            background: #00ff88;
+            color: #0a0a0a;
+        }
+
+        .btn-danger {
+            background: #ff4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff6666;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        /* Mining Cards */
+        .mining-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            transition: all 0.3s ease;
+        }
+
+        .mining-card:hover {
+            transform: translateY(-5px);
+            border-color: #00ff88;
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        .miner-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: none;
+            min-height: 100vh;
+            background: #0a0a0a;
+        }
+
+        .dashboard-header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #00ff88;
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .dashboard-main {
+            padding: 30px 0;
+        }
+
+        .dashboard-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        /* Modals */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            border: 1px solid #00ff88;
+            border-radius: 16px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: #00ff88;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #00ff88;
+        }
+
+        /* Mining Proof Modal */
+        .mining-proof-images {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .proof-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .proof-image:hover {
+            transform: scale(1.05);
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Crypto Mining Animation */
+        .mining-animation-advanced {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin: 0 auto;
+        }
+
+        .mining-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ff88;
+            border-radius: 50%;
+            animation: particleFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(0px) scale(0); opacity: 1; }
+            50% { transform: translateY(-20px) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-40px) scale(0); opacity: 0; }
+        }
+
+        /* Trading View Container */
+        .tradingview-widget-container {
+            height: 400px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        /* Notification System */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            color: white;
+            font-weight: 500;
+            z-index: 3000;
+            animation: slideIn 0.3s ease;
+        }
+
+        .notification.success {
+            background: #00ff88;
+            color: #0a0a0a;
+        }
+
+        .notification.error {
+            background: #ff4444;
+        }
+
+        .notification.info {
+            background: #00ccff;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); }
+            to { transform: translateX(0); }
+        }
+
+        /* Hidden class */
+        .hidden {
+            display: none !important;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .mining-proof-images {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 136, 0.5); }
+            50% { box-shadow: 0 0 30px rgba(0, 255, 136, 0.8); }
+        }
+
+        .glow-animation {
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        /* Mining Status */
+        .mining-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .mining-status.online {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .mining-status.offline {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+        }
+
+        /* Admin Login */
+        .admin-login {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 12px;
+            height: 12px;
+            background: #ff4444;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+        .admin-login:hover::after {
+            content: 'Admin Login';
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            background: #1a1a2e;
+            color: #00ff88;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        /* USDT Addresses */
+        .usdt-addresses {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid #ffd700;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+
+        .address-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+        }
+
+        .address-text {
+            font-family: monospace;
+            font-size: 0.9rem;
+            color: #ffd700;
+        }
+
+        .copy-btn {
+            background: #00ff88;
+            color: #0a0a0a;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        /* Exchange Fee */
+        .exchange-fee {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid #00ff88;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+
+        .fee-amount {
+            color: #00ff88;
+            font-weight: bold;
+        }
+
+        /* Mining Animation Container */
+        .mining-animation-container {
+            position: relative;
+            height: 100px;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .mining-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hash-rate-display {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+
+        .hash-rate-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .hash-rate-label {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        /* Crypto Cards */
+        .crypto-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .crypto-card:hover {
+            border-color: #00ff88;
+            transform: translateY(-2px);
+        }
+
+        .crypto-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 20px;
+        }
+
+        .btc-icon { background: linear-gradient(135deg, #f7931a, #ff9c07); }
+        .eth-icon { background: linear-gradient(135deg, #627eea, #8c9eff); }
+        .bnb-icon { background: linear-gradient(135deg, #f3ba2f, #ffd54f); }
+        .trx-icon { background: linear-gradient(135deg, #ff060a, #ff4549); }
+        .sol-icon { background: linear-gradient(135deg, #9945ff, #c581ff); }
+
+        /* Trading View Style */
+        .price-chart {
+            height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            margin: 20px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chart-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .chart-change {
+            font-size: 0.9rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        .chart-change.positive {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+        }
+
+        .chart-change.negative {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+        }
+
+        /* Business Purpose Registration */
+        .business-registration {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 60px 0;
+        }
+
+        .registration-hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            padding: 60px 0;
+            text-align: center;
+        }
+
+        .registration-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .registration-subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            margin-bottom: 40px;
+        }
+
+        .registration-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .reg-feature {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .reg-feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+        }
+
+        .reg-feature-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #ffffff;
+        }
+
+        .reg-feature-desc {
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #0a0a0a;
+            border-top: 1px solid #00ff88;
+            padding: 40px 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h4 {
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 8px;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: #00ff88;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Professional Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scale-in {
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.5s ease;
+        }
+
+        .scale-in.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Professional Button Effects */
+        .btn-effect {
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .btn-effect::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn-effect:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Professional Card Hover */
+        .card-hover-pro {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-hover-pro::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .card-hover-pro:hover::before {
+            left: 100%;
+        }
+
+        .card-hover-pro:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 255, 136, 0.2);
+        }
+
+        /* Professional Gradient Background */
+        .gradient-bg-pro {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Professional Neon Glow */
+        .neon-glow-pro {
+            text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
+            animation: neonPulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            from {
+                text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
+            }
+            to {
+                text-shadow: 0 0 20px #00ff88, 0 0 30px #00ff88, 0 0 40px #00ff88;
+            }
+        }
+
+        /* Professional Mining Status */
+        .mining-status-pro {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .mining-status-pro.online {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .mining-status-pro.offline {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
+        /* Professional Hash Rate */
+        .hash-rate-pro {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            letter-spacing: 1px;
+        }
+
+        /* Professional Success Message */
+        .success-message-pro {
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .success-message-pro .icon {
+            font-size: 3rem;
+            color: #00ff88;
+            margin-bottom: 15px;
+        }
+
+        .success-message-pro .title {
+            font-size: 1.5rem;
+            color: #00ff88;
+            margin-bottom: 10px;
+        }
+
+        .success-message-pro .message {
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        /* Professional Error Message */
+        .error-message-pro {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .error-message-pro .icon {
+            font-size: 3rem;
+            color: #ff4444;
+            margin-bottom: 15px;
+        }
+
+        .error-message-pro .title {
+            font-size: 1.5rem;
+            color: #ff4444;
+            margin-bottom: 10px;
+        }
+
+        .error-message-pro .message {
+            color: #ccc;
+            font-size: 1rem;
+        }
+
+        /* Professional Loading State */
+        .loading-state {
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(0, 255, 136, 0.1);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 8px;
+            color: #00ff88;
+            font-size: 0.9rem;
+        }
+
+        .loading-state::before {
+            content: '';
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(0, 255, 136, 0.3);
+            border-radius: 50%;
+            border-top-color: #00ff88;
+            animation: spin 1s linear infinite;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        /* Professional Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .empty-state-title {
+            font-size: 1.5rem;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+
+        .empty-state-message {
+            color: #888;
+            font-size: 1rem;
+        }
+
+        /* Professional Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-item-pro {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-item-pro:hover {
+            border-color: #00ff88;
+            transform: translateY(-2px);
+        }
+
+        .stat-value-pro {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 5px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .stat-label-pro {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Professional Admin Panel */
+        .admin-panel-pro {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+        }
+
+        .admin-header-pro {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-title-pro {
+            font-size: 1.5rem;
+            color: #00ff88;
+            margin: 0;
+        }
+
+        .admin-stats-pro {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .admin-stat-pro {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .admin-stat-value-pro {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ff88;
+            margin-bottom: 5px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .admin-stat-label-pro {
+            color: #ccc;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Professional Table */
+        .professional-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .professional-table th {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .professional-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ccc;
+        }
+
+        .professional-table tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* Professional Status Badge */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .status-badge.approved {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .status-badge.rejected {
+            background: rgba(255, 68, 68, 0.2);
+            color: #ff4444;
+            border: 1px solid rgba(255, 68, 68, 0.3);
+        }
+
+        /* Professional Button Group */
+        .btn-group-pro {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-group-pro .btn {
+            flex: 1;
+            min-width: 100px;
+        }
+
+        /* Professional Form */
+        .form-pro {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .form-group-pro {
+            margin-bottom: 25px;
+        }
+
+        .form-label-pro {
+            display: block;
+            margin-bottom: 8px;
+            color: #00ff88;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .form-input-pro {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-input-pro:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Professional Select */
+        .select-pro {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .select-pro:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Professional Textarea */
+        .textarea-pro {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        .textarea-pro:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 10px rgba(0, 255, 136, 0.3);
+        }
+
+        /* Professional Section */
+        .section-pro {
+            padding: 80px 0;
+            position: relative;
+        }
+
+        .section-header-pro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title-pro {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00ff88, #00cc6a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle-pro {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Professional Container */
+        .container-pro {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Professional Flex */
+        .flex-pro {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+        }
+
+        .flex-pro.column {
+            flex-direction: column;
+        }
+
+        /* Professional Grid */
+        .grid-pro {
+            display: grid;
+            gap: 30px;
+        }
+
+        .grid-pro-2 {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .grid-pro-3 {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .grid-pro-4 {
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+        @media (max-width: 768px) {
+            .grid-pro-2,
+            .grid-pro-3,
+            .grid-pro-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .flex-pro {
+                flex-direction: column;
+            }
+        }
+
+        /* Professional Spacing */
+        .mb-pro { margin-bottom: 20px; }
+        .mb-pro-lg { margin-bottom: 40px; }
+        .mt-pro { margin-top: 20px; }
+        .mt-pro-lg { margin-top: 40px; }
+        .p-pro { padding: 20px; }
+        .p-pro-lg { padding: 40px; }
+
+        /* Professional Colors */
+        .color-primary { color: #00ff88; }
+        .color-secondary { color: #00cc6a; }
+        .color-accent { color: #ffd700; }
+        .color-danger { color: #ff4444; }
+        .color-success { color: #00ff88; }
+        .color-warning { color: #ffc107; }
+        .color-info { color: #00ccff; }
+        .color-muted { color: #888; }
+
+        /* Professional Background */
+        .bg-primary-pro { background: rgba(0, 255, 136, 0.1); }
+        .bg-secondary-pro { background: rgba(0, 204, 106, 0.1); }
+        .bg-accent-pro { background: rgba(255, 215, 0, 0.1); }
+        .bg-danger-pro { background: rgba(255, 68, 68, 0.1); }
+
+        /* Professional Border */
+        .border-primary-pro { border-color: #00ff88; }
+        .border-secondary-pro { border-color: #00cc6a; }
+        .border-accent-pro { border-color: #ffd700; }
+        .border-danger-pro { border-color: #ff4444; }
+
+        /* Professional Text */
+        .text-primary-pro { color: #00ff88; }
+        .text-secondary-pro { color: #00cc6a; }
+        .text-accent-pro { color: #ffd700; }
+        .text-danger-pro { color: #ff4444; }
+
+        /* Professional Font */
+        .font-mono-pro { font-family: 'JetBrains Mono', monospace; }
+        .font-bold-pro { font-weight: 700; }
+        .font-semibold-pro { font-weight: 600; }
+        .font-medium-pro { font-weight: 500; }
+        .font-normal-pro { font-weight: 400; }
+        .font-light-pro { font-weight: 300; }
+
+        /* Professional Size */
+        .text-xs-pro { font-size: 0.75rem; }
+        .text-sm-pro { font-size: 0.875rem; }
+        .text-base-pro { font-size: 1rem; }
+        .text-lg-pro { font-size: 1.125rem; }
+        .text-xl-pro { font-size: 1.25rem; }
+        .text-2xl-pro { font-size: 1.5rem; }
+        .text-3xl-pro { font-size: 1.875rem; }
+        .text-4xl-pro { font-size: 2.25rem; }
+
+        /* Professional Alignment */
+        .text-center-pro { text-align: center; }
+        .text-left-pro { text-align: left; }
+        .text-right-pro { text-align: right; }
+
+        /* Professional Transform */
+        .uppercase-pro { text-transform: uppercase; }
+        .lowercase-pro { text-transform: lowercase; }
+        .capitalize-pro { text-transform: capitalize; }
+
+        /* Professional Decoration */
+        .underline-pro { text-decoration: underline; }
+        .no-underline-pro { text-decoration: none; }
+
+        /* Professional Shadow */
+        .shadow-pro { box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); }
+        .shadow-pro-lg { box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); }
+        .shadow-pro-xl { box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1); }
+
+        /* Professional Rounded */
+        .rounded-pro { border-radius: 4px; }
+        .rounded-pro-md { border-radius: 8px; }
+        .rounded-pro-lg { border-radius: 12px; }
+        .rounded-pro-xl { border-radius: 16px; }
+        .rounded-pro-full { border-radius: 9999px; }
+
+        /* Professional Position */
+        .relative-pro { position: relative; }
+        .absolute-pro { position: absolute; }
+        .fixed-pro { position: fixed; }
+        .sticky-pro { position: sticky; }
+
+        /* Professional Display */
+        .block-pro { display: block; }
+        .inline-pro { display: inline; }
+        .inline-block-pro { display: inline-block; }
+        .flex-pro { display: flex; }
+        .inline-flex-pro { display: inline-flex; }
+        .grid-pro { display: grid; }
+        .hidden-pro { display: none; }
+
+        /* Professional Visibility */
+        .visible-pro { visibility: visible; }
+        .invisible-pro { visibility: hidden; }
+
+        /* Professional Overflow */
+        .overflow-hidden-pro { overflow: hidden; }
+        .overflow-auto-pro { overflow: auto; }
+        .overflow-scroll-pro { overflow: scroll; }
+        .overflow-visible-pro { overflow: visible; }
+
+        /* Professional Cursor */
+        .cursor-pointer-pro { cursor: pointer; }
+        .cursor-default-pro { cursor: default; }
+        .cursor-not-allowed-pro { cursor: not-allowed; }
+
+        /* Professional User Select */
+        .select-none-pro { user-select: none; }
+        .select-text-pro { user-select: text; }
+        .select-all-pro { user-select: all; }
+
+        /* Professional Pointer Events */
+        .pointer-events-none-pro { pointer-events: none; }
+        .pointer-events-auto-pro { pointer-events: auto; }
+
+        /* Professional Resize */
+        .resize-none-pro { resize: none; }
+        .resize-y-pro { resize: vertical; }
+        .resize-x-pro { resize: horizontal; }
+        .resize-pro { resize: both; }
+
+        /* Professional Appearance */
+        .appearance-none-pro { appearance: none; }
+
+        /* Professional Outline */
+        .outline-none-pro { outline: none; }
+
+        /* Professional Opacity */
+        .opacity-0-pro { opacity: 0; }
+        .opacity-25-pro { opacity: 0.25; }
+        .opacity-50-pro { opacity: 0.5; }
+        .opacity-75-pro { opacity: 0.75; }
+        .opacity-100-pro { opacity: 1; }
+
+        /* Professional Z-Index */
+        .z-0-pro { z-index: 0; }
+        .z-10-pro { z-index: 10; }
+        .z-20-pro { z-index: 20; }
+        .z-30-pro { z-index: 30; }
+        .z-40-pro { z-index: 40; }
+        .z-50-pro { z-index: 50; }
+        .z-auto-pro { z-index: auto; }
+
+        /* Professional Flexbox */
+        .flex-1-pro { flex: 1 1 0%; }
+        .flex-auto-pro { flex: 1 1 auto; }
+        .flex-initial-pro { flex: 0 1 auto; }
+        .flex-none-pro { flex: none; }
+
+        .flex-row-pro { flex-direction: row; }
+        .flex-row-reverse-pro { flex-direction: row-reverse; }
+        .flex-col-pro { flex-direction: column; }
+        .flex-col-reverse-pro { flex-direction: column-reverse; }
+
+        .flex-wrap-pro { flex-wrap: wrap; }
+        .flex-wrap-reverse-pro { flex-wrap: wrap-reverse; }
+        .flex-nowrap-pro { flex-wrap: nowrap; }
+
+        .items-start-pro { align-items: flex-start; }
+        .items-end-pro { align-items: flex-end; }
+        .items-center-pro { align-items: center; }
+        .items-baseline-pro { align-items: baseline; }
+        .items-stretch-pro { align-items: stretch; }
+
+        .justify-start-pro { justify-content: flex-start; }
+        .justify-end-pro { justify-content: flex-end; }
+        .justify-center-pro { justify-content: center; }
+        .justify-between-pro { justify-content: space-between; }
+        .justify-around-pro { justify-content: space-around; }
+        .justify-evenly-pro { justify-content: space-evenly; }
+
+        /* Professional Grid */
+        .grid-cols-1-pro { grid-template-columns: repeat(1, minmax(0, 1fr)); }
+        .grid-cols-2-pro { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+        .grid-cols-3-pro { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .grid-cols-4-pro { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .grid-cols-5-pro { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+        .grid-cols-6-pro { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+        .grid-cols-7-pro { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+        .grid-cols-8-pro { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+        .grid-cols-9-pro { grid-template-columns: repeat(9, minmax(0, 1fr)); }
+        .grid-cols-10-pro { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+        .grid-cols-11-pro { grid-template-columns: repeat(11, minmax(0, 1fr)); }
+        .grid-cols-12-pro { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+
+        .gap-0-pro { gap: 0px; }
+        .gap-1-pro { gap: 4px; }
+        .gap-2-pro { gap: 8px; }
+        .gap-3-pro { gap: 12px; }
+        .gap-4-pro { gap: 16px; }
+        .gap-5-pro { gap: 20px; }
+        .gap-6-pro { gap: 24px; }
+        .gap-7-pro { gap: 28px; }
+        .gap-8-pro { gap: 32px; }
+        .gap-9-pro { gap: 36px; }
+        .gap-10-pro { gap: 40px; }
+
+        /* Professional Width */
+        .w-full-pro { width: 100%; }
+        .w-auto-pro { width: auto; }
+        .w-1\\/2-pro { width: 50%; }
+        .w-1\\/3-pro { width: 33.333333%; }
+        .w-2\\/3-pro { width: 66.666667%; }
+        .w-1\\/4-pro { width: 25%; }
+        .w-2\\/4-pro { width: 50%; }
+        .w-3\\/4-pro { width: 75%; }
+        .w-1\\/5-pro { width: 20%; }
+        .w-2\\/5-pro { width: 40%; }
+        .w-3\\/5-pro { width: 60%; }
+        .w-4\\/5-pro { width: 80%; }
+        .w-1\\/6-pro { width: 16.666667%; }
+        .w-2\\/6-pro { width: 33.333333%; }
+        .w-3\\/6-pro { width: 50%; }
+        .w-4\\/6-pro { width: 66.666667%; }
+        .w-5\\/6-pro { width: 83.333333%; }
+
+        /* Professional Height */
+        .h-full-pro { height: 100%; }
+        .h-auto-pro { height: auto; }
+        .h-screen-pro { height: 100vh; }
+
+        /* Professional Min Height */
+        .min-h-full-pro { min-height: 100%; }
+        .min-h-screen-pro { min-height: 100vh; }
+
+        /* Professional Max Width */
+        .max-w-full-pro { max-width: 100%; }
+        .max-w-none-pro { max-width: none; }
+
+        /* Professional Max Height */
+        .max-h-full-pro { max-height: 100%; }
+        .max-h-screen-pro { max-height: 100vh; }
+
+        /* Professional Margin */
+        .m-0-pro { margin: 0; }
+        .m-1-pro { margin: 4px; }
+        .m-2-pro { margin: 8px; }
+        .m-3-pro { margin: 12px; }
+        .m-4-pro { margin: 16px; }
+        .m-5-pro { margin: 20px; }
+        .m-6-pro { margin: 24px; }
+        .m-7-pro { margin: 28px; }
+        .m-8-pro { margin: 32px; }
+        .m-9-pro { margin: 36px; }
+        .m-10-pro { margin: 40px; }
+        .m-auto-pro { margin: auto; }
+
+        /* Professional Padding */
+        .p-0-pro { padding: 0; }
+        .p-1-pro { padding: 4px; }
+        .p-2-pro { padding: 8px; }
+        .p-3-pro { padding: 12px; }
+        .p-4-pro { padding: 16px; }
+        .p-5-pro { padding: 20px; }
+        .p-6-pro { padding: 24px; }
+        .p-7-pro { padding: 28px; }
+        .p-8-pro { padding: 32px; }
+        .p-9-pro { padding: 36px; }
+        .p-10-pro { padding: 40px; }
+
+        /* Professional Transition */
+        .transition-pro { transition: all 0.3s ease; }
+        .transition-pro-all { transition: all 0.3s ease; }
+        .transition-pro-colors { transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; }
+        .transition-pro-opacity { transition: opacity 0.3s ease; }
+        .transition-pro-shadow { transition: box-shadow 0.3s ease; }
+        .transition-pro-transform { transition: transform 0.3s ease; }
+
+        /* Professional Duration */
+        .duration-75-pro { transition-duration: 75ms; }
+        .duration-100-pro { transition-duration: 100ms; }
+        .duration-150-pro { transition-duration: 150ms; }
+        .duration-200-pro { transition-duration: 200ms; }
+        .duration-300-pro { transition-duration: 300ms; }
+        .duration-500-pro { transition-duration: 500ms; }
+        .duration-700-pro { transition-duration: 700ms; }
+        .duration-1000-pro { transition-duration: 1000ms; }
+
+        /* Professional Timing Function */
+        .ease-linear-pro { transition-timing-function: linear; }
+        .ease-in-pro { transition-timing-function: cubic-bezier(0.4, 0, 1, 1); }
+        .ease-out-pro { transition-timing-function: cubic-bezier(0, 0, 0.2, 1); }
+        .ease-in-out-pro { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+        /* Professional Delay */
+        .delay-75-pro { transition-delay: 75ms; }
+        .delay-100-pro { transition-delay: 100ms; }
+        .delay-150-pro { transition-delay: 150ms; }
+        .delay-200-pro { transition-delay: 200ms; }
+        .delay-300-pro { transition-delay: 300ms; }
+        .delay-500-pro { transition-delay: 500ms; }
+        .delay-700-pro { transition-delay: 700ms; }
+        .delay-1000-pro { transition-delay: 1000ms; }
+
+        /* Professional Animation */
+        .animate-none-pro { animation: none; }
+        .animate-spin-pro { animation: spin 1s linear infinite; }
+        .animate-ping-pro { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
+        .animate-pulse-pro { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        .animate-bounce-pro { animation: bounce 1s infinite; }
+
+        @keyframes ping {
+            75%, 100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(-25%);
+                animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+            }
+            50% {
+                transform: none;
+                animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+            }
+        }
+
+        /* Professional Transform */
+        .transform-pro { transform: translateX(var(--tw-translate-x, 0)) translateY(var(--tw-translate-y, 0)) rotate(var(--tw-rotate, 0)) skewX(var(--tw-skew-x, 0)) skewY(var(--tw-skew-y, 0)) scaleX(var(--tw-scale-x, 1)) scaleY(var(--tw-scale-y, 1)); }
+        .transform-none-pro { transform: none; }
+
+        /* Professional Translate */
+        .translate-x-0-pro { --tw-translate-x: 0px; }
+        .translate-x-1-pro { --tw-translate-x: 0.25rem; }
+        .translate-x-2-pro { --tw-translate-x: 0.5rem; }
+        .translate-x-3-pro { --tw-translate-x: 0.75rem; }
+        .translate-x-4-pro { --tw-translate-x: 1rem; }
+        .translate-x-5-pro { --tw-translate-x: 1.25rem; }
+        .translate-x-6-pro { --tw-translate-x: 1.5rem; }
+        .translate-x-7-pro { --tw-translate-x: 1.75rem; }
+        .translate-x-8-pro { --tw-translate-x: 2rem; }
+
+        .translate-y-0-pro { --tw-translate-y: 0px; }
+        .translate-y-1-pro { --tw-translate-y: 0.25rem; }
+        .translate-y-2-pro { --tw-translate-y: 0.5rem; }
+        .translate-y-3-pro { --tw-translate-y: 0.75rem; }
+        .translate-y-4-pro { --tw-translate-y: 1rem; }
+        .translate-y-5-pro { --tw-translate-y: 1.25rem; }
+        .translate-y-6-pro { --tw-translate-y: 1.5rem; }
+        .translate-y-7-pro { --tw-translate-y: 1.75rem; }
+        .translate-y-8-pro { --tw-translate-y: 2rem; }
+
+        /* Professional Rotate */
+        .rotate-0-pro { --tw-rotate: 0deg; }
+        .rotate-1-pro { --tw-rotate: 1deg; }
+        .rotate-2-pro { --tw-rotate: 2deg; }
+        .rotate-3-pro { --tw-rotate: 3deg; }
+        .rotate-6-pro { --tw-rotate: 6deg; }
+        .rotate-12-pro { --tw-rotate: 12deg; }
+        .rotate-45-pro { --tw-rotate: 45deg; }
+        .rotate-90-pro { --tw-rotate: 90deg; }
+        .rotate-180-pro { --tw-rotate: 180deg; }
+
+        /* Professional Scale */
+        .scale-0-pro { --tw-scale-x: 0; --tw-scale-y: 0; }
+        .scale-50-pro { --tw-scale-x: .5; --tw-scale-y: .5; }
+        .scale-75-pro { --tw-scale-x: .75; --tw-scale-y: .75; }
+        .scale-90-pro { --tw-scale-x: .9; --tw-scale-y: .9; }
+        .scale-95-pro { --tw-scale-x: .95; --tw-scale-y: .95; }
+        .scale-100-pro { --tw-scale-x: 1; --tw-scale-y: 1; }
+        .scale-105-pro { --tw-scale-x: 1.05; --tw-scale-y: 1.05; }
+        .scale-110-pro { --tw-scale-x: 1.1; --tw-scale-y: 1.1; }
+        .scale-125-pro { --tw-scale-x: 1.25; --tw-scale-y: 1.25; }
+        .scale-150-pro { --tw-scale-x: 1.5; --tw-scale-y: 1.5; }
+
+        /* Professional Skew */
+        .skew-x-0-pro { --tw-skew-x: 0deg; }
+        .skew-x-1-pro { --tw-skew-x: 1deg; }
+        .skew-x-2-pro { --tw-skew-x: 2deg; }
+        .skew-x-3-pro { --tw-skew-x: 3deg; }
+        .skew-x-6-pro { --tw-skew-x: 6deg; }
+        .skew-x-12-pro { --tw-skew-x: 12deg; }
+
+        .skew-y-0-pro { --tw-skew-y: 0deg; }
+        .skew-y-1-pro { --tw-skew-y: 1deg; }
+        .skew-y-2-pro { --tw-skew-y: 2deg; }
+        .skew-y-3-pro { --tw-skew-y: 3deg; }
+        .skew-y-6-pro { --tw-skew-y: 6deg; }
+        .skew-y-12-pro { --tw-skew-y: 12deg; }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-content">
+            <div class="mining-animation"></div>
+            <p>Loading HashCore Mining...</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div class="logo">
+                    <div class="logo-icon">⛏️</div>
+                    <span>HashCore Mining</span>
+                </div>
+                
+                <nav class="nav-menu">
+                    <a href="#home" class="nav-link">Home</a>
+                    <a href="#mining" class="nav-link">Mining</a>
+                    <a href="#exchange" class="nav-link">Exchange</a>
+                    <a href="#proof" class="nav-link">Proof</a>
+                    <a href="#about" class="nav-link">About</a>
+                    <a href="#contact" class="nav-link">Contact</a>
+                </nav>
+                
+                <div class="header-actions">
+                    <button class="btn btn-secondary" onclick="showLogin()">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button class="btn btn-primary" onclick="showSignup()">
+                        <i class="fas fa-user-plus"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Landing Page -->
+    <div id="landingPage">
+        <!-- Hero Section with Business Registration -->
+        <section id="home" class="hero gradient-bg-pro">
+            <div class="container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center;">
+                    <div class="hero-content">
+                        <h1>Professional <span class="gradient-text">Crypto Mining</span> Platform</h1>
+                        <p style="font-size: 1.2rem; color: #ccc; margin-bottom: 20px;">
+                            HashCore Mining - Trusted by 50,000+ miners worldwide. Mine BTC, ETH, BNB, TRX, SOL with real ASIC hardware.
+                        </p>
+                        
+                        <div style="display: flex; gap: 10px; margin-bottom: 30px;">
+                            <button class="btn btn-primary" onclick="showSignup()">
+                                <i class="fas fa-play"></i> Start Mining Now
+                            </button>
+                            <button class="btn btn-secondary" onclick="showMiningProof()">
+                                <i class="fas fa-eye"></i> View Mining Proof
+                            </button>
+                        </div>
+                        
+                        <div class="hero-stats">
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalMiners">52,847</div>
+                                <div>Active Miners</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="totalHashrate">847 TH/s</div>
+                                <div>Total Hashrate</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="dailyProfit">$2.4M</div>
+                                <div>Daily Profits</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-value" id="uptime">99.9%</div>
+                                <div>Uptime</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="float-animation">
+                        <div class="dashboard-card professional-shadow">
+                            <h3 style="text-align: center; margin-bottom: 20px;">Live Mining Status</h3>
+                            <div class="mining-visual">
+                                <div class="mining-particles" id="miningParticles"></div>
+                                <div class="hash-rate-display">
+                                    <div class="hash-rate-value" id="hashRateDisplay">847.29 TH/s</div>
+                                    <div class="hash-rate-label">Current Hash Rate</div>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Mining Power</span>
+                                    <span style="color: #00ff88;">Online</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px;">
+                                    <div style="width: 87%; height: 100%; background: linear-gradient(90deg, #00ff88, #00cc6a); border-radius: 4px; transition: width 0.3s ease;"></div>
+                                </div>
+                                <div style="font-size: 0.8rem; color: #ccc; margin-top: 5px;">87% Network Hash Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Purpose Registration Section -->
+        <section class="business-registration">
+            <div class="container">
+                <div class="registration-hero">
+                    <h2 class="registration-title">Start Your Crypto Mining Business Today</h2>
+                    <p class="registration-subtitle">
+                        Join thousands of businesses worldwide who trust HashCore Mining for their crypto mining operations
+                    </p>
+                    
+                    <div class="registration-features">
+                        <div class="business-feature-card">
+                            <div class="business-icon">
+                                <i class="fas fa-building"></i>
+                            </div>
+                            <h3 class="business-title">Enterprise Grade</h3>
+                            <p class="business-description">
+                                Professional mining infrastructure with 99.9% uptime guarantee
+                            </p>
+                        </div>
+                        
+                        <div class="business-feature-card">
+                            <div class="business-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h3 class="business-title">Daily Returns</h3>
+                            <p class="business-description">
+                                Consistent daily mining returns with transparent reporting
+                            </p>
+                        </div>
+                        
+                        <div class="business-feature-card">
+                            <div class="business-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <h3 class="business-title">Fully Secured</h3>
+                            <p class="business-description">
+                                Bank-level security with insurance coverage for your investments
+                            </p>
+                        </div>
+                        
+                        <div class="business-feature-card">
+                            <div class="business-icon">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="business-title">24/7 Support</h3>
+                            <p class="business-description">
+                                Dedicated business support team available round the clock
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 40px;">
+                        <button class="btn btn-primary btn-effect" style="font-size: 1.2rem; padding: 15px 40px;" onclick="showSignup()">
+                            <i class="fas fa-rocket"></i> Start Business Mining
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Crypto Mining Section -->
+        <section id="mining" class="section-pro">
+            <div class="container-pro">
+                <div class="section-header-pro">
+                    <h2 class="section-title-pro">Multi-Cryptocurrency Mining</h2>
+                    <p class="section-subtitle-pro">
+                        Mine the most profitable cryptocurrencies with our advanced ASIC hardware
+                    </p>
+                </div>
+                
+                <div class="stats-grid">
+                    <div class="stat-item-pro">
+                        <div class="stat-value-pro" id="btcHashrate">125.8</div>
+                        <div class="stat-label-pro">BTC Hash Rate (PH/s)</div>
+                    </div>
+                    <div class="stat-item-pro">
+                        <div class="stat-value-pro" id="ethHashrate">847.2</div>
+                        <div class="stat-label-pro">ETH Hash Rate (TH/s)</div>
+                    </div>
+                    <div class="stat-item-pro">
+                        <div class="stat-value-pro" id="bnbHashrate">423.6</div>
+                        <div class="stat-label-pro">BNB Hash Rate (GH/s)</div>
+                    </div>
+                    <div class="stat-item-pro">
+                        <div class="stat-value-pro" id="trxHashrate">289.4</div>
+                        <div class="stat-label-pro">TRX Hash Rate (TH/s)</div>
+                    </div>
+                </div>
+                
+                <div class="grid-pro-3">
+                    <!-- BTC Mining -->
+                    <div class="mining-card card-hover-pro">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="crypto-icon btc-icon">
+                                <i class="fab fa-bitcoin"></i>
+                            </div>
+                            <h3 style="font-size: 1.5rem; color: #f7931a; margin-bottom: 10px;">Bitcoin Mining</h3>
+                            <p style="color: #ccc;">Antminer S19 XP</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Hash Rate</span>
+                                <span style="color: #f7931a; font-weight: bold;">140 TH/s</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Power Consumption</span>
+                                <span style="color: #f7931a; font-weight: bold;">3010W</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Daily Return</span>
+                                <span style="color: #f7931a; font-weight: bold;">0.85%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-visual">
+                            <div class="hash-rate-display">
+                                <div class="hash-rate-pro" id="btcMiningRate">140.00 TH/s</div>
+                                <div class="hash-rate-label">Live Hash Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; font-weight: bold;">$50 - $999</div>
+                            <div style="color: #ccc; font-size: 0.9rem;">Minimum Investment</div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="selectPlan('btc')">
+                            Start BTC Mining
+                        </button>
+                    </div>
+                    
+                    <!-- ETH Mining -->
+                    <div class="mining-card card-hover-pro">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="crypto-icon eth-icon">
+                                <i class="fab fa-ethereum"></i>
+                            </div>
+                            <h3 style="font-size: 1.5rem; color: #627eea; margin-bottom: 10px;">Ethereum Mining</h3>
+                            <p style="color: #ccc;">Innosilicon A11 Pro</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Hash Rate</span>
+                                <span style="color: #627eea; font-weight: bold;">2 GH/s</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Power Consumption</span>
+                                <span style="color: #627eea; font-weight: bold;">2500W</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Daily Return</span>
+                                <span style="color: #627eea; font-weight: bold;">1.2%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-visual">
+                            <div class="hash-rate-display">
+                                <div class="hash-rate-pro" id="ethMiningRate">2.00 GH/s</div>
+                                <div class="hash-rate-label">Live Hash Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; font-weight: bold;">$100 - $1999</div>
+                            <div style="color: #ccc; font-size: 0.9rem;">Minimum Investment</div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="selectPlan('eth')">
+                            Start ETH Mining
+                        </button>
+                    </div>
+                    
+                    <!-- BNB Mining -->
+                    <div class="mining-card card-hover-pro">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="crypto-icon bnb-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <h3 style="font-size: 1.5rem; color: #f3ba2f; margin-bottom: 10px;">BNB Mining</h3>
+                            <p style="color: #ccc;">Antminer L7</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Hash Rate</span>
+                                <span style="color: #f3ba2f; font-weight: bold;">9.5 GH/s</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Power Consumption</span>
+                                <span style="color: #f3ba2f; font-weight: bold;">3425W</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Daily Return</span>
+                                <span style="color: #f3ba2f; font-weight: bold;">0.95%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-visual">
+                            <div class="hash-rate-display">
+                                <div class="hash-rate-pro" id="bnbMiningRate">9.50 GH/s</div>
+                                <div class="hash-rate-label">Live Hash Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; font-weight: bold;">$200 - $2999</div>
+                            <div style="color: #ccc; font-size: 0.9rem;">Minimum Investment</div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="selectPlan('bnb')">
+                            Start BNB Mining
+                        </button>
+                    </div>
+                    
+                    <!-- TRX Mining -->
+                    <div class="mining-card card-hover-pro">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="crypto-icon trx-icon">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 style="font-size: 1.5rem; color: #ff060a; margin-bottom: 10px;">TRON Mining</h3>
+                            <p style="color: #ccc;">Antminer E9</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Hash Rate</span>
+                                <span style="color: #ff060a; font-weight: bold;">3 GH/s</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Power Consumption</span>
+                                <span style="color: #ff060a; font-weight: bold;">2556W</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Daily Return</span>
+                                <span style="color: #ff060a; font-weight: bold;">1.1%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-visual">
+                            <div class="hash-rate-display">
+                                <div class="hash-rate-pro" id="trxMiningRate">3.00 GH/s</div>
+                                <div class="hash-rate-label">Live Hash Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; font-weight: bold;">$300 - $3999</div>
+                            <div style="color: #ccc; font-size: 0.9rem;">Minimum Investment</div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="selectPlan('trx')">
+                            Start TRX Mining
+                        </button>
+                    </div>
+                    
+                    <!-- SOL Mining -->
+                    <div class="mining-card card-hover-pro">
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div class="crypto-icon sol-icon">
+                                <i class="fas fa-sun"></i>
+                            </div>
+                            <h3 style="font-size: 1.5rem; color: #9945ff; margin-bottom: 10px;">Solana Mining</h3>
+                            <p style="color: #ccc;">Custom SOL Miners</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Hash Rate</span>
+                                <span style="color: #9945ff; font-weight: bold;">500 MH/s</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Power Consumption</span>
+                                <span style="color: #9945ff; font-weight: bold;">1800W</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                <span>Daily Return</span>
+                                <span style="color: #9945ff; font-weight: bold;">1.5%</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mining-visual">
+                            <div class="hash-rate-display">
+                                <div class="hash-rate-pro" id="solMiningRate">500.00 MH/s</div>
+                                <div class="hash-rate-label">Live Hash Rate</div>
+                            </div>
+                        </div>
+                        
+                        <div style="text-align: center; margin-bottom: 20px;">
+                            <div style="font-size: 2rem; font-weight: bold;">$500 - $4999</div>
+                            <div style="color: #ccc; font-size: 0.9rem;">Minimum Investment</div>
+                        </div>
+                        
+                        <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="selectPlan('sol')">
+                            Start SOL Mining
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Profit Calculator -->
+                <div class="dashboard-card professional-shadow">
+                    <h3 style="text-align: center; margin-bottom: 20px;">Mining Profit Calculator</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px;">
+                        <div class="form-group">
+                            <label class="form-label">Select Cryptocurrency</label>
+                            <select id="calcCrypto" class="form-input">
+                                <option value="btc">Bitcoin (BTC)</option>
+                                <option value="eth">Ethereum (ETH)</option>
+                                <option value="bnb">Binance Coin (BNB)</option>
+                                <option value="trx">TRON (TRX)</option>
+                                <option value="sol">Solana (SOL)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Investment Amount (USDT)</label>
+                            <input type="number" id="calcAmount" class="form-input" placeholder="1000" min="50">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Contract Period (Months)</label>
+                            <select id="calcPeriod" class="form-input">
+                                <option value="6">6 Months</option>
+                                <option value="12">12 Months</option>
+                                <option value="24">24 Months</option>
+                                <option value="36">36 Months</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary btn-effect" onclick="calculateProfit()">
+                            <i class="fas fa-calculator"></i> Calculate Profit
+                        </button>
+                    </div>
+                    
+                    <div id="profitResult" class="success-message-pro hidden">
+                        <div class="icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="title">Estimated Returns</div>
+                        <div class="message" id="profitMessage"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Exchange Section -->
+        <section id="exchange" class="section-pro bg-secondary">
+            <div class="container-pro">
+                <div class="section-header-pro">
+                    <h2 class="section-title-pro">Crypto Exchange</h2>
+                    <p class="section-subtitle-pro">
+                        Exchange your mined cryptocurrencies to USDT with live market rates
+                    </p>
+                </div>
+                
+                <div class="dashboard-card professional-shadow">
+                    <div class="exchange-fee">
+                        <i class="fas fa-percentage"></i> Exchange Fee: <span class="fee-amount">0.01%</span> (Minimum fee applicable)
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <div class="form-group">
+                            <label class="form-label">From Currency</label>
+                            <select id="fromCurrency" class="form-input" onchange="updateExchangeRate()">
+                                <option value="BTC">Bitcoin (BTC)</option>
+                                <option value="ETH">Ethereum (ETH)</option>
+                                <option value="BNB">Binance Coin (BNB)</option>
+                                <option value="TRX">TRON (TRX)</option>
+                                <option value="SOL">Solana (SOL)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">To Currency</label>
+                            <select id="toCurrency" class="form-input" disabled>
+                                <option value="USDT">Tether (USDT)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
+                        <div class="form-group">
+                            <label class="form-label">Amount to Exchange</label>
+                            <input type="number" id="exchangeAmount" class="form-input" placeholder="10" min="10" step="0.000001" oninput="calculateExchange()">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">You Will Receive (USDT)</label>
+                            <input type="number" id="receiveAmount" class="form-input" readonly>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <div class="price-chart" id="priceChart">
+                            <div class="chart-header">
+                                <div>
+                                    <div class="chart-price" id="currentPrice">$0.00</div>
+                                    <div class="chart-change positive" id="priceChange">+0.00%</div>
+                                </div>
+                                <div class="mining-status-pro online">
+                                    <i class="fas fa-circle"></i>
+                                    Live Rate
+                                </div>
+                            </div>
+                            <div id="tradingViewChart" style="height: 250px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="btn btn-primary btn-effect" onclick="executeExchange()">
+                            <i class="fas fa-exchange-alt"></i> Exchange Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Exchange History -->
+                <div class="dashboard-card professional-shadow">
+                    <h3 style="margin-bottom: 20px;">Recent Exchanges</h3>
+                    <div id="exchangeHistory">
+                        <div class="empty-state">
+                            <div class="empty-state-icon">
+                                <i class="fas fa-exchange-alt"></i>
+                            </div>
+                            <div class="empty-state-title">No exchanges yet</div>
+                            <div class="empty-state-message">
+                                Start exchanging your mined cryptocurrencies to USDT
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mining Proof -->
+        <section id="proof" class="section-pro">
+            <div class="container-pro">
+                <div class="section-header-pro">
+                    <h2 class="section-title-pro">Mining Farm Proof</h2>
+                    <p class="section-subtitle-pro">
+                        Transparency is our priority. See our real mining operations across multiple facilities
+                    </p>
+                </div>
+                
+                <div class="mining-proof-images">
+                    <img src="https://images.unsplash.com/photo-1621761192216-6912c472b2f8?w=800&h=600&fit=crop" alt="Bitcoin Mining Farm" class="proof-image">
+                    <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop" alt="Mining Facility Cooling" class="proof-image">
+                    <img src="https://images.unsplash.com/photo-1621570366646-b200e6dd4b84?w=800&h=600&fit=crop" alt="ASIC Miners Setup" class="proof-image">
+                    <img src="https://images.unsplash.com/photo-1621762343322-d1c96d0fc2e6?w=800&h=600&fit=crop" alt="Control Room" class="proof-image">
+                </div>
+                
+                <div class="dashboard-card professional-shadow">
+                    <h3 style="text-align: center; margin-bottom: 20px;">Live Mining Statistics</h3>
+                    <div class="grid-pro-4">
+                        <div class="dashboard-card">
+                            <h4 style="color: #f7931a; margin-bottom: 10px;">Bitcoin Pool</h4>
+                            <div class="hash-rate-pro">125.8 PH/s</div>
+                            <div class="mining-status-pro online">
+                                <i class="fas fa-circle"></i>
+                                Active
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4 style="color: #627eea; margin-bottom: 10px;">Ethereum Pool</h4>
+                            <div class="hash-rate-pro">847.2 TH/s</div>
+                            <div class="mining-status-pro online">
+                                <i class="fas fa-circle"></i>
+                                Active
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4 style="color: #f3ba2f; margin-bottom: 10px;">BNB Pool</h4>
+                            <div class="hash-rate-pro">423.6 GH/s</div>
+                            <div class="mining-status-pro online">
+                                <i class="fas fa-circle"></i>
+                                Active
+                            </div>
+                        </div>
+                        <div class="dashboard-card">
+                            <h4 style="color: #ff060a; margin-bottom: 10px;">TRON Pool</h4>
+                            <div class="hash-rate-pro">289.4 TH/s</div>
+                            <div class="mining-status-pro online">
+                                <i class="fas fa-circle"></i>
+                                Active
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px;">
+                    <button class="btn btn-primary btn-effect" onclick="downloadAuditReport()">
+                        <i class="fas fa-download"></i> Download Audit Report
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section-pro bg-secondary">
+            <div class="container-pro">
+                <div class="section-header-pro">
+                    <h2 class="section-title-pro">About HashCore Mining</h2>
+                    <p class="section-subtitle-pro">
+                        Leading professional cryptocurrency mining company with global operations
+                    </p>
+                </div>
+                
+                <div class="flex-pro">
+                    <div>
+                        <p style="font-size: 1.1rem; color: #ccc; margin-bottom: 20px;">
+                            HashCore Mining is a professionally managed cryptocurrency mining company, registered and operating 
+                            from Mumbai, India. We provide cloud mining services with real ASIC hardware in secured data centers 
+                            across Kazakhstan, Iceland, and Canada.
+                        </p>
+                        
+                        <div style="margin-bottom: 30px;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <i class="fas fa-check-circle" style="color: #00ff88;"></i>
+                                <span>Registered under Companies Act 2013</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <i class="fas fa-check-circle" style="color: #00ff88;"></i>
+                                <span>ISO 27001 & SOC 2 Certified</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <i class="fas fa-check-circle" style="color: #00ff88;"></i>
+                                <span>Green Mining Initiative</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                <i class="fas fa-check-circle" style="color: #00ff88;"></i>
+                                <span>24/7 Customer Support</span>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card professional-shadow">
+                            <h3 style="margin-bottom: 15px;">Company Information</h3>
+                            <div style="font-size: 0.9rem;">
+                                <p style="margin-bottom: 8px;"><strong>Company Name:</strong> HashCore Mining Technologies Pvt. Ltd.</p>
+                                <p style="margin-bottom: 8px;"><strong>Registration No:</strong> U74999MH2023PTC123456</p>
+                                <p style="margin-bottom: 8px;"><strong>Email:</strong> kaitoreignx@gmail.com</p>
+                                <p style="margin-bottom: 8px;"><strong>Phone:</strong> +1 365 668 0075</p>
+                                <p style="margin-bottom: 8px;"><strong>Registered Office:</strong> Mumbai, Maharashtra, India</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div class="dashboard-card professional-shadow" style="margin-bottom: 20px;">
+                            <h3 style="margin-bottom: 15px;">Leadership Team</h3>
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                                <div class="team-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">Jihan Wu</p>
+                                    <p style="color: #ccc; font-size: 0.9rem;">CEO & Founder</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div class="team-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">Yuling Ma</p>
+                                    <p style="color: #ccc; font-size: 0.9rem;">CTO</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card professional-shadow">
+                            <h3 style="margin-bottom: 15px;">Our Achievements</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                                <div style="text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: bold; color: #00ff88;">50,000+</div>
+                                    <div style="color: #ccc; font-size: 0.9rem;">Active Users</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: bold; color: #ffd700;">$50M+</div>
+                                    <div style="color: #ccc; font-size: 0.9rem;">Total Mined</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: bold; color: #ff6b6b;">15</div>
+                                    <div style="color: #ccc; font-size: 0.9rem;">Data Centers</div>
+                                </div>
+                                <div style="text-align: center;">
+                                    <div style="font-size: 1.5rem; font-weight: bold; color: #00ccff;">99.9%</div>
+                                    <div style="color: #ccc; font-size: 0.9rem;">Uptime</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Team Section -->
+                <div class="team-section">
+                    <h3 style="text-align: center; margin-bottom: 30px; color: #00ff88;">Our Professional Team</h3>
+                    <div class="team-grid">
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h4 class="team-name">Jihan Wu</h4>
+                            <p class="team-role">CEO & Founder</p>
+                            <p class="team-description">
+                                15+ years in crypto mining industry, former Bitmain executive
+                            </p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-laptop-code"></i>
+                            </div>
+                            <h4 class="team-name">Yuling Ma</h4>
+                            <p class="team-role">CTO</p>
+                            <p class="team-description">
+                                Blockchain technology expert with 12+ years experience
+                            </p>
+                        </div>
+                        
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <h4 class="team-name">Total Team</h4>
+                            <p class="team-role">163 Members</p>
+                            <p class="team-description">
+                                Professional team across mining, technology, and support
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section-pro">
+            <div class="container-pro">
+                <div class="section-header-pro">
+                    <h2 class="section-title-pro">Get in Touch</h2>
+                    <p class="section-subtitle-pro">
+                        24/7 customer support available for all your mining needs
+                    </p>
+                </div>
+                
+                <div class="flex-pro">
+                    <div>
+                        <div class="dashboard-card professional-shadow" style="margin-bottom: 20px;">
+                            <h3 style="margin-bottom: 15px;">Contact Information</h3>
+                            <div style="space-y: 10px;">
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                    <i class="fas fa-map-marker-alt" style="color: #00ff88;"></i>
+                                    <span>HashCore Mining Technologies Pvt. Ltd.<br>
+                                    Mumbai, India</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 15px;">
+                                    <i class="fas fa-phone" style="color: #00ff88;"></i>
+                                    <span>+1 365 668 0075</span>
+                                </div>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <i class="fas fa-envelope" style="color: #00ff88;"></i>
+                                    <span>kaitoreignx@gmail.com</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="dashboard-card professional-shadow">
+                            <h3 style="margin-bottom: 15px;">Support Channels</h3>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                                <a href="https://wa.me/13656680075" target="_blank" class="btn btn-secondary" style="width: 100%;">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="https://t.me/hashcoremining" target="_blank" class="btn btn-secondary" style="width: 100%;">
+                                    <i class="fab fa-telegram"></i> Telegram
+                                </a>
+                                <button class="btn btn-secondary" style="width: 100%;">
+                                    <i class="fas fa-headset"></i> Live Chat
+                                </button>
+                                <button class="btn btn-secondary" style="width: 100%;">
+                                    <i class="fas fa-envelope"></i> Email
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card professional-shadow">
+                        <h3 style="margin-bottom: 20px;">Send us a Message</h3>
+                        <form onsubmit="handleContactForm(event)">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                                <input type="text" placeholder="Your Name" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;">
+                                <input type="email" placeholder="Your Email" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white;">
+                            </div>
+                            <input type="text" placeholder="Subject" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; margin-bottom: 15px;">
+                            <textarea placeholder="Your Message" rows="5" required style="width: 100%; padding: 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; color: white; margin-bottom: 20px; resize: vertical;"></textarea>
+                            <button type="submit" class="btn btn-primary btn-effect" style="width: 100%;">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Dashboard -->
+    <div id="dashboard" class="dashboard">
+        <header class="dashboard-header">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="logo">
+                        <div class="logo-icon">⛏️</div>
+                        <span>Dashboard</span>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <div class="dashboard-card" style="margin: 0; padding: 10px 15px;">
+                            <div style="font-size: 0.8rem; color: #ccc;">Balance</div>
+                            <div style="font-weight: bold; color: #00ff88;" id="dashBalance">$0</div>
+                        </div>
+                        
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <span id="dashUsername">User</span>
+                            <button class="btn btn-secondary" onclick="logout()">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="dashboard-main">
+            <div class="container">
+                <!-- Quick Stats -->
+                <div class="stats-grid">
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-wallet" style="color: #00ff88; font-size: 1.5rem;"></i>
+                            <span style="font-size: 0.8rem; color: #ccc;">+12.5%</span>
+                        </div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #00ff88;" id="walletBalance">$0</div>
+                        <div style="font-size: 0.9rem; color: #ccc;">Wallet Balance</div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-coins" style="color: #ffd700; font-size: 1.5rem;"></i>
+                            <span style="font-size: 0.8rem; color: #ccc;">Mining</span>
+                        </div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #ffd700;" id="miningBalance">$0</div>
+                        <div style="font-size: 0.9rem; color: #ccc;">Mining Balance</div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-chart-line" style="color: #00ccff; font-size: 1.5rem;"></i>
+                            <span style="font-size: 0.8rem; color: #ccc;">+8.2%</span>
+                        </div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #00ccff;" id="totalProfit">$0</div>
+                        <div style="font-size: 0.9rem; color: #ccc;">Total Profit</div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                            <i class="fas fa-microchip" style="color: #ff6b6b; font-size: 1.5rem;"></i>
+                            <span style="font-size: 0.8rem; color: #ccc;">Active</span>
+                        </div>
+                        <div style="font-size: 1.5rem; font-weight: bold; color: #ff6b6b;" id="activeMiners">0</div>
+                        <div style="font-size: 0.9rem; color: #ccc;">Active Miners</div>
+                    </div>
+                </div>
+                
+                <!-- Dashboard Grid -->
+                <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 30px;">
+                    <!-- Main Content -->
+                    <div>
+                        <!-- Current Mining -->
+                        <div class="dashboard-card" style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <h3 style="font-size: 1.2rem;">Current Mining</h3>
+                                <div style="display: flex; align-items: center; gap: 5px;">
+                                    <div style="width: 8px; height: 8px; background: #00ff88; border-radius: 50%;"></div>
+                                    <span style="font-size: 0.8rem; color: #00ff88;">Online</span>
+                                </div>
+                            </div>
+                            
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div>
+                                    <div style="font-size: 1.8rem; font-weight: bold; color: #00ff88;" id="currentHashrate">0 TH/s</div>
+                                    <div style="color: #ccc;">Hash Rate</div>
+                                </div>
+                                <div>
+                                    <div style="font-size: 1.8rem; font-weight: bold; color: #00ff88;" id="dailyEarnings">$0</div>
+                                    <div style="color: #ccc;">Daily Earnings</div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 10px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <span>Mining Progress</span>
+                                    <span id="miningPercentage">0%</span>
+                                </div>
+                                <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.1); border-radius: 4px;">
+                                    <div id="miningProgress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #00ff88, #00cc6a); border-radius: 4px; transition: width 0.3s ease;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Active Miners -->
+                        <div class="dashboard-card">
+                            <h3 style="margin-bottom: 20px;">Your Active Miners</h3>
+                            <div id="activeMinersList">
+                                <div class="empty-state">
+                                    <div class="empty-state-icon">
+                                        <i class="fas fa-microchip"></i>
+                                    </div>
+                                    <div class="empty-state-title">No active miners</div>
+                                    <div class="empty-state-message">
+                                        Buy a miner to start earning daily returns
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sidebar -->
+                    <div>
+                        <!-- Quick Actions -->
+                        <div class="dashboard-card" style="margin-bottom: 20px;">
+                            <h3 style="margin-bottom: 15px;">Quick Actions</h3>
+                            <div style="display: flex; flex-direction: column; gap: 10px;">
+                                <button class="btn btn-primary btn-effect" onclick="showDepositModal()">
+                                    <i class="fas fa-plus"></i> Add Funds
+                                </button>
+                                <button class="btn btn-secondary btn-effect" onclick="showWithdrawModal()">
+                                    <i class="fas fa-minus"></i> Withdraw
+                                </button>
+                                <button class="btn btn-secondary btn-effect" onclick="showMiningModal()">
+                                    <i class="fas fa-microchip"></i> Buy Miner
+                                </button>
+                                <button class="btn btn-secondary btn-effect" onclick="claimDailyBonus()">
+                                    <i class="fas fa-gift"></i> Daily Bonus
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Referral -->
+                        <div class="dashboard-card" style="margin-bottom: 20px;">
+                            <h3 style="margin-bottom: 15px;">Refer & Earn</h3>
+                            <div style="margin-bottom: 15px;">
+                                <label style="display: block; margin-bottom: 5px; font-size: 0.9rem;">Your Referral Code</label>
+                                <div style="display: flex;">
+                                    <input type="text" id="referralCodeDisplay" readonly style="flex: 1; padding: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.2); border-radius: 4px 0 0 4px; font-family: monospace;">
+                                    <button class="btn btn-secondary" onclick="copyReferralCode()" style="border-radius: 0 4px 4px 0;">
+                                        <i class="fas fa-copy"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div style="text-align: center;">
+                                <p style="font-size: 0.9rem; color: #ccc; margin-bottom: 5px;">Total Referrals: <span id="totalReferrals">0</span></p>
+                                <p style="font-size: 0.9rem; color: #ccc;">Earnings: $<span id="referralEarnings">0</span></p>
+                            </div>
+                        </div>
+                        
+                        <!-- Recent Activity -->
+                        <div class="dashboard-card">
+                            <h3 style="margin-bottom: 15px;">Recent Activity</h3>
+                            <div id="recentActivity" style="max-height: 200px; overflow-y: auto;">
+                                <div style="padding: 10px; background: rgba(255,255,255,0.05); border-radius: 4px; margin-bottom: 5px;">
+                                    <p style="font-size: 0.9rem;">Welcome to HashCore Mining!</p>
+                                    <p style="font-size: 0.8rem; color: #ccc;">Just now</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Mining Plans Section -->
+                <div class="dashboard-card professional-shadow" style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 20px;">Available Mining Plans</h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                        <div class="crypto-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                <div class="crypto-icon btc-icon">
+                                    <i class="fab fa-bitcoin"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #f7931a; margin-bottom: 5px;">Bitcoin</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">0.85% Daily</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>$50 - $999</span>
+                                <button class="btn btn-primary" onclick="buyMiner('btc', 500)" style="padding: 5px 10px; font-size: 0.8rem;">
+                                    Buy for $500
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="crypto-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                <div class="crypto-icon eth-icon">
+                                    <i class="fab fa-ethereum"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #627eea; margin-bottom: 5px;">Ethereum</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">1.2% Daily</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>$100 - $1999</span>
+                                <button class="btn btn-primary" onclick="buyMiner('eth', 1000)" style="padding: 5px 10px; font-size: 0.8rem;">
+                                    Buy for $1000
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="crypto-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                <div class="crypto-icon bnb-icon">
+                                    <i class="fas fa-coins"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #f3ba2f; margin-bottom: 5px;">BNB</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">0.95% Daily</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>$200 - $2999</span>
+                                <button class="btn btn-primary" onclick="showCustomAmountModal('bnb')" style="padding: 5px 10px; font-size: 0.8rem;">
+                                    Custom Amount
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="crypto-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                <div class="crypto-icon trx-icon">
+                                    <i class="fas fa-bolt"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #ff060a; margin-bottom: 5px;">TRON</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">1.1% Daily</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>$300 - $3999</span>
+                                <button class="btn btn-primary" onclick="showCustomAmountModal('trx')" style="padding: 5px 10px; font-size: 0.8rem;">
+                                    Custom Amount
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="crypto-card">
+                            <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 10px;">
+                                <div class="crypto-icon sol-icon">
+                                    <i class="fas fa-sun"></i>
+                                </div>
+                                <div>
+                                    <h4 style="color: #9945ff; margin-bottom: 5px;">Solana</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">1.5% Daily</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <span>$500 - $4999</span>
+                                <button class="btn btn-primary" onclick="showCustomAmountModal('sol')" style="padding: 5px 10px; font-size: 0.8rem;">
+                                    Custom Amount
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modals -->
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Login to Dashboard</h2>
+                <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" id="loginEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password</label>
+                    <input type="password" id="loginPass" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-effect" style="width: 100%; margin-bottom: 15px;">
+                    Login
+                </button>
+                <p style="text-align: center; color: #ccc;">
+                    Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')" style="color: #00ff88;">Register here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal - Business Purpose Registration -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Business Account Registration</h2>
+                <button class="modal-close" onclick="closeModal('signupModal')">&times;</button>
+            </div>
+            
+            <!-- Business Registration Header -->
+            <div style="text-align: center; margin-bottom: 20px; padding: 20px; background: rgba(0,255,136,0.1); border-radius: 8px;">
+                <i class="fas fa-building" style="font-size: 2rem; color: #00ff88; margin-bottom: 10px;"></i>
+                <h3 style="color: #00ff88; margin-bottom: 10px;">Professional Mining Account</h3>
+                <p style="color: #ccc; font-size: 0.9rem;">Join 50,000+ businesses mining with HashCore</p>
+            </div>
+            
+            <form onsubmit="handleSignup(event)">
+                <div class="form-group">
+                    <label class="form-label">Full Name *</label>
+                    <input type="text" id="signupName" class="form-input" required placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Email Address *</label>
+                    <input type="email" id="signupEmail" class="form-input" required placeholder="Enter your email address">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Phone Number *</label>
+                    <input type="tel" id="signupPhone" class="form-input" required placeholder="+1 365 668 0075">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Password *</label>
+                    <input type="password" id="signupPass" class="form-input" required placeholder="Create a strong password">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Referral Code (Optional)</label>
+                    <input type="text" id="signupReferralCode" class="form-input" placeholder="Enter referral code if any">
+                </div>
+                
+                <!-- Business Terms -->
+                <div style="margin: 20px 0; padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px;">
+                    <label style="display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: #ccc;">
+                        <input type="checkbox" required style="margin-top: 3px;">
+                        <span>
+                            I agree to the <a href="#" onclick="showLegalDoc('terms')" style="color: #00ff88;">Terms & Conditions</a> and 
+                            <a href="#" onclick="showLegalDoc('privacy')" style="color: #00ff88;">Privacy Policy</a>. 
+                            I understand that crypto mining involves risks and I am investing responsibly.
+                        </span>
+                    </label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-effect" style="width: 100%; margin-bottom: 15px;">
+                    <i class="fas fa-user-plus"></i> Create Business Account
+                </button>
+                
+                <p style="text-align: center; color: #ccc;">
+                    Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')" style="color: #00ff88;">Login here</a>
+                </p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Mining Proof Modal -->
+    <div id="miningProofModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Mining Farm Proof</h2>
+                <button class="modal-close" onclick="closeModal('miningProofModal')">&times;</button>
+            </div>
+            <div class="mining-proof-images">
+                <img src="https://images.unsplash.com/photo-1621761192216-6912c472b2f8?w=800&h=600&fit=crop" alt="Mining Farm" class="proof-image">
+                <img src="https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=800&h=600&fit=crop" alt="Mining Facility" class="proof-image">
+                <img src="https://images.unsplash.com/photo-1621570366646-b200e6dd4b84?w=800&h=600&fit=crop" alt="ASIC Miners" class="proof-image">
+                <img src="https://images.unsplash.com/photo-1621762343322-d1c96d0fc2e6?w=800&h=600&fit=crop" alt="Control Room" class="proof-image">
+            </div>
+            <div style="margin-top: 20px; text-align: center;">
+                <button class="btn btn-primary btn-effect" onclick="downloadAuditReport()">
+                    <i class="fas fa-download"></i> Download Audit Report
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Deposit Modal -->
+    <div id="depositModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Deposit USDT</h2>
+                <button class="modal-close" onclick="closeModal('depositModal')">&times;</button>
+            </div>
+            
+            <div class="exchange-fee">
+                <i class="fas fa-info-circle"></i> Minimum deposit: <span class="fee-amount">10 USDT</span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Select Blockchain</label>
+                <select id="depositChain" class="form-input" onchange="updateDepositAddress()">
+                    <option value="">Select Chain</option>
+                    <option value="bsc">BSC (BEP-20) - Recommended</option>
+                    <option value="trc">TRC-20</option>
+                    <option value="erc">ERC-20</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Amount (USDT)</label>
+                <input type="number" id="depositAmount" class="form-input" placeholder="Minimum 10 USDT" min="10" step="0.000001">
+            </div>
+            
+            <div id="depositAddressContainer" class="usdt-addresses hidden">
+                <p style="text-align: center; font-weight: bold; margin-bottom: 10px;">Send USDT to:</p>
+                <div class="address-item">
+                    <span class="address-text" id="depositAddress">Loading...</span>
+                    <button class="copy-btn" onclick="copyToClipboard('depositAddress')">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+                <p style="text-align: center; font-size: 0.9rem; color: #ccc; margin-top: 10px;">
+                    ⚠️ Send only <span id="chainName"></span> USDT to this address
+                </p>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Transaction Hash (TxID) *</label>
+                <input type="text" id="depositTxid" class="form-input" placeholder="Paste your transaction hash here">
+                <small style="color: #ccc; font-size: 0.8rem;">You can find this in your wallet transaction history</small>
+            </div>
+            
+            <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="submitDeposit()">
+                <i class="fas fa-paper-plane"></i> Submit Deposit Request
+            </button>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal -->
+    <div id="withdrawModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Withdraw USDT</h2>
+                <button class="modal-close" onclick="closeModal('withdrawModal')">&times;</button>
+            </div>
+            
+            <div class="exchange-fee">
+                <i class="fas fa-info-circle"></i> Minimum withdrawal: <span class="fee-amount">10 USDT</span>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Select Blockchain</label>
+                <select id="withdrawChain" class="form-input">
+                    <option value="">Select Chain</option>
+                    <option value="bsc">BSC (BEP-20) - Recommended</option>
+                    <option value="trc">TRC-20</option>
+                    <option value="erc">ERC-20</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Withdrawal Address</label>
+                <input type="text" id="withdrawAddress" class="form-input" placeholder="Enter your USDT wallet address">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Amount (USDT)</label>
+                <input type="number" id="withdrawAmount" class="form-input" placeholder="Minimum 10 USDT" min="10" step="0.000001">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">2FA Code (if enabled)</label>
+                <input type="text" id="withdraw2FA" class="form-input" placeholder="Enter 2FA code">
+            </div>
+            
+            <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="submitWithdrawal()">
+                <i class="fas fa-paper-plane"></i> Submit Withdrawal Request
+            </button>
+        </div>
+    </div>
+
+    <!-- Custom Amount Modal -->
+    <div id="customAmountModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Custom Investment Amount</h2>
+                <button class="modal-close" onclick="closeModal('customAmountModal')">&times;</button>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Cryptocurrency</label>
+                <input type="text" id="customCrypto" class="form-input" readonly>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Investment Amount (USDT)</label>
+                <input type="number" id="customAmount" class="form-input" placeholder="Enter amount" min="50" step="0.000001">
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label">Expected Daily Return</label>
+                <input type="text" id="customReturn" class="form-input" readonly>
+            </div>
+            
+            <button class="btn btn-primary btn-effect" style="width: 100%;" onclick="buyCustomMiner()">
+                <i class="fas fa-shopping-cart"></i> Buy Miner
+            </button>
+        </div>
+    </div>
+
+    <!-- Admin Login -->
+    <div class="admin-login" onclick="showAdminLogin()"></div>
+
+    <!-- Admin Login Modal -->
+    <div id="adminLoginModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="color: #00ff88;">Admin Login</h2>
+                <button class="modal-close" onclick="closeModal('adminLoginModal')">&times;</button>
+            </div>
+            <form onsubmit="handleAdminLogin(event)">
+                <div class="form-group">
+                    <label class="form-label">Admin Email</label>
+                    <input type="email" id="adminEmail" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Admin Password</label>
+                    <input type="password" id="adminPass" class="form-input" required>
+                </div>
+                <button type="submit" class="btn btn-primary btn-effect" style="width: 100%;">
+                    Login as Admin
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="dashboard" style="display: none;">
+        <header class="dashboard-header">
+            <div class="container">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div class="logo">
+                        <div class="logo-icon">⛏️</div>
+                        <span>Admin Panel</span>
+                    </div>
+                    
+                    <div style="display: flex; align-items: center; gap: 20px;">
+                        <button class="btn btn-danger" onclick="logout()">
+                            <i class="fas fa-sign-out-alt"></i> Logout
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main class="dashboard-main">
+            <div class="container">
+                <div class="admin-panel-pro">
+                    <div class="admin-header-pro">
+                        <h2 class="admin-title-pro">Admin Dashboard</h2>
+                        <div class="mining-status-pro online">
+                            <i class="fas fa-circle"></i>
+                            System Online
+                        </div>
+                    </div>
+                    
+                    <div class="admin-stats-pro">
+                        <div class="admin-stat-pro">
+                            <div class="admin-stat-value-pro" id="totalUsers">0</div>
+                            <div class="admin-stat-label-pro">Total Users</div>
+                        </div>
+                        <div class="admin-stat-pro">
+                            <div class="admin-stat-value-pro" id="totalDeposits">$0</div>
+                            <div class="admin-stat-label-pro">Total Deposits</div>
+                        </div>
+                        <div class="admin-stat-pro">
+                            <div class="admin-stat-value-pro" id="totalWithdrawals">$0</div>
+                            <div class="admin-stat-label-pro">Total Withdrawals</div>
+                        </div>
+                        <div class="admin-stat-pro">
+                            <div class="admin-stat-value-pro" id="totalMinersAdmin">0</div>
+                            <div class="admin-stat-label-pro">Active Miners</div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 20px;">Pending Deposits</h3>
+                        <div id="pendingDeposits">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="empty-state-title">No pending deposits</div>
+                                <div class="empty-state-message">
+                                    All deposits are up to date
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="margin-bottom: 30px;">
+                        <h3 style="margin-bottom: 20px;">Pending Withdrawals</h3>
+                        <div id="pendingWithdrawals">
+                            <div class="empty-state">
+                                <div class="empty-state-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="empty-state-title">No pending withdrawals</div>
+                                <div class="empty-state-message">
+                                    All withdrawals are up to date
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 style="margin-bottom: 20px;">System Controls</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <button class="btn btn-primary" onclick="generateDailyReturns()">
+                                <i class="fas fa-calculator"></i> Generate Daily Returns
+                            </button>
+                            <button class="btn btn-secondary" onclick="exportUserData()">
+                                <i class="fas fa-download"></i> Export User Data
+                            </button>
+                            <button class="btn btn-secondary" onclick="systemMaintenance()">
+                                <i class="fas fa-tools"></i> System Maintenance
+                            </button>
+                            <button class="btn btn-danger" onclick="emergencyShutdown()">
+                                <i class="fas fa-power-off"></i> Emergency Shutdown
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ====== ENHANCED JAVASCRIPT ====== -->
+    <script>
+        // Global Variables
+        let currentUser = null;
+        let users = JSON.parse(localStorage.getItem('users')) || {};
+        let deposits = JSON.parse(localStorage.getItem('deposits')) || [];
+        let withdrawals = JSON.parse(localStorage.getItem('withdrawals')) || [];
+        let exchanges = JSON.parse(localStorage.getItem('exchanges')) || [];
+        let admin = { email: 'admin@hashcore.com', password: 'admin123' };
+        let miningIntervals = {};
+        let depositTimers = {};
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                document.getElementById('loadingScreen').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                }, 500);
+            }, 2000);
+
+            // Create mining particles
+            createMiningParticles();
+            
+            // Start hash rate animation
+            startHashRateAnimation();
+            
+            // Update live stats
+            updateLiveStats();
+            
+            // Check if user is logged in
+            checkLoginStatus();
+            
+            // Start background mining for all users
+            startBackgroundMining();
+        });
+
+        // Mining Particles Animation
+        function createMiningParticles() {
+            const container = document.getElementById('miningParticles');
+            if (!container) return;
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'mining-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                container.appendChild(particle);
+            }
+        }
+
+        // Hash Rate Animation
+        function startHashRateAnimation() {
+            const hashRateElement = document.getElementById('hashRateDisplay');
+            if (!hashRateElement) return;
+            
+            setInterval(() => {
+                const baseRate = 847.29;
+                const variation = (Math.random() - 0.5) * 10;
+                const newRate = baseRate + variation;
+                hashRateElement.textContent = newRate.toFixed(2) + ' TH/s';
+            }, 2000);
+        }
+
+        // Update Live Stats
+        function updateLiveStats() {
+            setInterval(() => {
+                // Update BTC hash rate
+                const btcRate = 125.8 + (Math.random() - 0.5) * 5;
+                document.getElementById('btcHashrate').textContent = btcRate.toFixed(1);
+                
+                // Update ETH hash rate
+                const ethRate = 847.2 + (Math.random() - 0.5) * 20;
+                document.getElementById('ethHashrate').textContent = ethRate.toFixed(1);
+                
+                // Update BNB hash rate
+                const bnbRate = 423.6 + (Math.random() - 0.5) * 10;
+                document.getElementById('bnbHashrate').textContent = bnbRate.toFixed(1);
+                
+                // Update TRX hash rate
+                const trxRate = 289.4 + (Math.random() - 0.5) * 15;
+                document.getElementById('trxHashrate').textContent = trxRate.toFixed(1);
+            }, 3000);
+        }
+
+        // Background Mining System - Continues even when user is logged out
+        function startBackgroundMining() {
+            setInterval(() => {
+                Object.keys(users).forEach(email => {
+                    const user = users[email];
+                    if (user.miners && user.miners.length > 0) {
+                        user.miners.forEach(miner => {
+                            if (miner.status === 'active') {
+                                // Calculate mining returns (per second)
+                                const perSecondReturn = miner.dailyReturn / (24 * 60 * 60);
+                                
+                                // Add to mining balance
+                                user.miningBalance = (user.miningBalance || 0) + perSecondReturn;
+                                user.totalProfit = (user.totalProfit || 0) + perSecondReturn;
+                            }
+                        });
+                        
+                        // Save updated user data
+                        users[email] = user;
+                    }
+                });
+                
+                // Save to localStorage
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Update dashboard if user is logged in
+                if (currentUser) {
+                    updateDashboard();
+                }
+            }, 1000); // Update every second
+        }
+
+        // Modal Functions
+        function showModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function switchModal(fromModal, toModal) {
+            closeModal(fromModal);
+            showModal(toModal);
+        }
+
+        // Login/Signup Functions
+        function showLogin() {
+            showModal('loginModal');
+        }
+
+        function showSignup() {
+            showModal('signupModal');
+        }
+
+        function showMiningProof() {
+            showModal('miningProofModal');
+        }
+
+        function showDepositModal() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                showLogin();
+                return;
+            }
+            showModal('depositModal');
+        }
+
+        function showWithdrawModal() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                showLogin();
+                return;
+            }
+            showModal('withdrawModal');
+        }
+
+        function showMiningModal() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                showLogin();
+                return;
+            }
+            // Show mining plans section
+            document.querySelector('#dashboard .dashboard-card:last-child').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showCustomAmountModal(crypto) {
+            document.getElementById('customCrypto').value = crypto.toUpperCase();
+            document.getElementById('customAmount').value = '';
+            document.getElementById('customReturn').value = '';
+            showModal('customAmountModal');
+        }
+
+        function showAdminLogin() {
+            showModal('adminLoginModal');
+        }
+
+        // Handle Login
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPass').value;
+
+            if (users[email] && users[email].password === password) {
+                currentUser = users[email];
+                currentUser.email = email;
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                closeModal('loginModal');
+                showDashboard();
+                showNotification('Login successful!', 'success');
+                updateDashboard();
+            } else {
+                showNotification('Invalid email or password', 'error');
+            }
+        }
+
+        // Handle Signup
+        function handleSignup(event) {
+            event.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPass').value;
+            const referralCode = document.getElementById('signupReferralCode').value;
+
+            if (users[email]) {
+                showNotification('Email already registered', 'error');
+                return;
+            }
+
+            // Create new user
+            const newUser = {
+                name: name,
+                email: email,
+                phone: phone,
+                password: password,
+                balance: 0,
+                miningBalance: 0,
+                totalProfit: 0,
+                referralCode: generateReferralCode(),
+                referredBy: referralCode || null,
+                referrals: [],
+                miners: [],
+                createdAt: new Date().toISOString()
+            };
+
+            users[email] = newUser;
+            localStorage.setItem('users', JSON.stringify(users));
+
+            // Handle referral
+            if (referralCode && users[referralCode]) {
+                users[referralCode].referrals.push(email);
+                showNotification('Referral bonus applied!', 'success');
+            }
+
+            currentUser = newUser;
+            currentUser.email = email;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            closeModal('signupModal');
+            showDashboard();
+            showNotification('Account created successfully!', 'success');
+            updateDashboard();
+        }
+
+        // Generate Referral Code
+        function generateReferralCode() {
+            return 'HC' + Math.random().toString(36).substring(2, 8).toUpperCase();
+        }
+
+        // Show Dashboard
+        function showDashboard() {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'block';
+            document.getElementById('dashUsername').textContent = currentUser.name;
+            updateDashboard();
+        }
+
+        // Show Admin Panel
+        function showAdminPanel() {
+            document.getElementById('landingPage').style.display = 'none';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'block';
+            updateAdminPanel();
+        }
+
+        // Update Dashboard
+        function updateDashboard() {
+            if (!currentUser) return;
+
+            document.getElementById('dashBalance').textContent = '$' + currentUser.balance.toFixed(2);
+            document.getElementById('walletBalance').textContent = '$' + currentUser.balance.toFixed(2);
+            document.getElementById('miningBalance').textContent = '$' + currentUser.miningBalance.toFixed(2);
+            document.getElementById('totalProfit').textContent = '$' + currentUser.totalProfit.toFixed(2);
+            document.getElementById('activeMiners').textContent = currentUser.miners.length;
+            document.getElementById('referralCodeDisplay').value = currentUser.referralCode;
+            document.getElementById('totalReferrals').textContent = currentUser.referrals.length;
+            
+            // Calculate referral earnings
+            let referralEarnings = 0;
+            currentUser.referrals.forEach(ref => {
+                if (users[ref] && users[ref].balance > 0) {
+                    referralEarnings += users[ref].balance * 0.05; // 5% referral bonus
+                }
+            });
+            document.getElementById('referralEarnings').textContent = referralEarnings.toFixed(2);
+
+            // Update mining stats
+            updateMiningStats();
+            updateActiveMinersList();
+        }
+
+        // Update Mining Stats
+        function updateMiningStats() {
+            if (!currentUser || currentUser.miners.length === 0) {
+                document.getElementById('currentHashrate').textContent = '0 TH/s';
+                document.getElementById('dailyEarnings').textContent = '$0';
+                document.getElementById('miningPercentage').textContent = '0%';
+                document.getElementById('miningProgress').style.width = '0%';
+                return;
+            }
+
+            let totalHashrate = 0;
+            let dailyEarnings = 0;
+
+            currentUser.miners.forEach(miner => {
+                totalHashrate += miner.hashrate;
+                dailyEarnings += miner.dailyReturn;
+            });
+
+            document.getElementById('currentHashrate').textContent = totalHashrate.toFixed(2) + ' TH/s';
+            document.getElementById('dailyEarnings').textContent = '$' + dailyEarnings.toFixed(2);
+            
+            // Calculate mining progress (example: 24 hours = 100%)
+            const miningProgress = Math.min((Date.now() - new Date(currentUser.miners[0].startedAt).getTime()) / (24 * 60 * 60 * 1000) * 100, 100);
+            document.getElementById('miningPercentage').textContent = miningProgress.toFixed(1) + '%';
+            document.getElementById('miningProgress').style.width = miningProgress + '%';
+        }
+
+        // Update Active Miners List
+        function updateActiveMinersList() {
+            const container = document.getElementById('activeMinersList');
+            if (!currentUser || currentUser.miners.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <div class="empty-state-title">No active miners</div>
+                        <div class="empty-state-message">
+                            Buy a miner to start earning daily returns
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            currentUser.miners.forEach((miner, index) => {
+                html += `
+                    <div class="crypto-card" style="margin-bottom: 15px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div style="display: flex; align-items: center; gap: 15px;">
+                                <div class="crypto-icon ${miner.crypto}-icon">
+                                    <i class="fab fa-${miner.crypto === 'btc' ? 'bitcoin' : miner.crypto === 'eth' ? 'ethereum' : 'coins'}"></i>
+                                </div>
+                                <div>
+                                    <h4 style="margin-bottom: 5px;">${miner.crypto.toUpperCase()} Miner</h4>
+                                    <p style="color: #ccc; font-size: 0.9rem;">${miner.hashrate} TH/s • $${miner.investment}</p>
+                                </div>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="color: #00ff88; font-weight: bold;">$${miner.dailyReturn.toFixed(2)}/day</div>
+                                <div class="mining-status-pro online">
+                                    <i class="fas fa-circle"></i>
+                                    Active
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Select Mining Plan
+        function selectPlan(crypto) {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                showLogin();
+                return;
+            }
+
+            const plans = {
+                btc: { min: 50, max: 999, return: 0.0085 },
+                eth: { min: 100, max: 1999, return: 0.012 },
+                bnb: { min: 200, max: 2999, return: 0.0095 },
+                trx: { min: 300, max: 3999, return: 0.011 },
+                sol: { min: 500, max: 4999, return: 0.015 }
+            };
+
+            const plan = plans[crypto];
+            const amount = prompt(`Enter investment amount for ${crypto.toUpperCase()} mining ($${plan.min} - $${plan.max}):`);
+            
+            if (!amount || isNaN(amount) || amount < plan.min || amount > plan.max) {
+                showNotification('Invalid amount', 'error');
+                return;
+            }
+
+            if (currentUser.balance < amount) {
+                showNotification('Insufficient balance', 'error');
+                return;
+            }
+
+            buyMiner(crypto, parseFloat(amount));
+        }
+
+        // Buy Miner
+        function buyMiner(crypto, amount) {
+            if (!currentUser) return;
+
+            const plans = {
+                btc: { hashrate: 140, return: 0.0085 },
+                eth: { hashrate: 2000, return: 0.012 },
+                bnb: { hashrate: 9500, return: 0.0095 },
+                trx: { hashrate: 3000, return: 0.011 },
+                sol: { hashrate: 500, return: 0.015 }
+            };
+
+            const plan = plans[crypto];
+            const dailyReturn = amount * plan.return;
+
+            const miner = {
+                id: Date.now(),
+                crypto: crypto,
+                investment: amount,
+                hashrate: plan.hashrate,
+                dailyReturn: dailyReturn,
+                startedAt: new Date().toISOString(),
+                status: 'active'
+            };
+
+            currentUser.miners.push(miner);
+            currentUser.balance -= amount;
+            saveUserData();
+            updateDashboard();
+            showNotification(`${crypto.toUpperCase()} miner purchased successfully!`, 'success');
+        }
+
+        // Buy Custom Miner
+        function buyCustomMiner() {
+            const crypto = document.getElementById('customCrypto').value.toLowerCase();
+            const amount = parseFloat(document.getElementById('customAmount').value);
+
+            if (!amount || amount < 50) {
+                showNotification('Minimum investment is $50', 'error');
+                return;
+            }
+
+            if (currentUser.balance < amount) {
+                showNotification('Insufficient balance', 'error');
+                return;
+            }
+
+            buyMiner(crypto, amount);
+            closeModal('customAmountModal');
+        }
+
+        // Calculate Profit
+        function calculateProfit() {
+            const crypto = document.getElementById('calcCrypto').value;
+            const amount = parseFloat(document.getElementById('calcAmount').value) || 1000;
+            const period = parseInt(document.getElementById('calcPeriod').value);
+
+            const returns = {
+                btc: 0.0085,
+                eth: 0.012,
+                bnb: 0.0095,
+                trx: 0.011,
+                sol: 0.015
+            };
+
+            const dailyReturn = amount * returns[crypto];
+            const totalReturn = dailyReturn * 30 * period;
+            const totalProfit = totalReturn - amount;
+
+            document.getElementById('profitMessage').innerHTML = `
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 10px;">Investment: <strong>$${amount}</strong></p>
+                    <p style="margin-bottom: 10px;">Daily Return: <strong>$${dailyReturn.toFixed(2)}</strong></p>
+                    <p style="margin-bottom: 10px;">Monthly Return: <strong>$${(dailyReturn * 30).toFixed(2)}</strong></p>
+                    <p style="margin-bottom: 10px;">Total Return (${period} months): <strong>$${totalReturn.toFixed(2)}</strong></p>
+                    <p style="margin-bottom: 10px;">Net Profit: <strong style="color: #00ff88;">$${totalProfit.toFixed(2)}</strong></p>
+                    <p style="font-size: 0.9rem; color: #ccc;">ROI: ${((totalProfit / amount) * 100).toFixed(1)}%</p>
+                </div>
+            `;
+            document.getElementById('profitResult').classList.remove('hidden');
+        }
+
+        // Update Exchange Rate
+        function updateExchangeRate() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const prices = {
+                BTC: 45000,
+                ETH: 3200,
+                BNB: 420,
+                TRX: 0.12,
+                SOL: 145
+            };
+
+            const price = prices[fromCurrency];
+            document.getElementById('currentPrice').textContent = `$${price.toFixed(2)}`;
+            document.getElementById('priceChange').textContent = `+${(Math.random() * 5 - 2.5).toFixed(2)}%`;
+            
+            calculateExchange();
+        }
+
+        // Calculate Exchange
+        function calculateExchange() {
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const amount = parseFloat(document.getElementById('exchangeAmount').value) || 0;
+            const prices = {
+                BTC: 45000,
+                ETH: 3200,
+                BNB: 420,
+                TRX: 0.12,
+                SOL: 145
+            };
+
+            const price = prices[fromCurrency];
+            const receiveAmount = amount * price * (1 - 0.0001); // 0.01% fee
+            document.getElementById('receiveAmount').value = receiveAmount.toFixed(2);
+        }
+
+        // Execute Exchange
+        function executeExchange() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                return;
+            }
+
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const amount = parseFloat(document.getElementById('exchangeAmount').value);
+            const receiveAmount = parseFloat(document.getElementById('receiveAmount').value);
+
+            if (!amount || amount <= 0) {
+                showNotification('Please enter a valid amount', 'error');
+                return;
+            }
+
+            // Check if user has sufficient mining balance
+            if (currentUser.miningBalance < amount) {
+                showNotification('Insufficient mining balance', 'error');
+                return;
+            }
+
+            // Execute exchange
+            currentUser.miningBalance -= amount;
+            currentUser.balance += receiveAmount;
+
+            // Record exchange
+            const exchange = {
+                id: Date.now(),
+                userEmail: currentUser.email,
+                fromCurrency: fromCurrency,
+                toCurrency: 'USDT',
+                amount: amount,
+                receiveAmount: receiveAmount,
+                exchangeRate: receiveAmount / amount,
+                timestamp: new Date().toISOString()
+            };
+
+            exchanges.push(exchange);
+            localStorage.setItem('exchanges', JSON.stringify(exchanges));
+            saveUserData();
+
+            // Update exchange history
+            updateExchangeHistory();
+
+            showNotification(`Exchange successful! You received ${receiveAmount.toFixed(2)} USDT`, 'success');
+            
+            // Reset form
+            document.getElementById('exchangeAmount').value = '';
+            document.getElementById('receiveAmount').value = '';
+            
+            updateDashboard();
+        }
+
+        // Update Exchange History
+        function updateExchangeHistory() {
+            const container = document.getElementById('exchangeHistory');
+            const userExchanges = exchanges.filter(e => e.userEmail === currentUser.email).slice(-5);
+            
+            if (userExchanges.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-exchange-alt"></i>
+                        </div>
+                        <div class="empty-state-title">No exchanges yet</div>
+                        <div class="empty-state-message">
+                            Start exchanging your mined cryptocurrencies to USDT
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            userExchanges.forEach(exchange => {
+                html += `
+                    <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 10px;">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <p style="font-weight: bold; margin-bottom: 5px;">${exchange.amount} ${exchange.fromCurrency} → ${exchange.receiveAmount.toFixed(2)} USDT</p>
+                                <p style="color: #ccc; font-size: 0.9rem;">Rate: $${exchange.exchangeRate.toFixed(2)}</p>
+                            </div>
+                            <div style="text-align: right;">
+                                <p style="color: #00ff88; font-weight: bold;">+${exchange.receiveAmount.toFixed(2)} USDT</p>
+                                <p style="color: #ccc; font-size: 0.8rem;">${new Date(exchange.timestamp).toLocaleDateString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        // Deposit Functions
+        function updateDepositAddress() {
+            const chain = document.getElementById('depositChain').value;
+            const container = document.getElementById('depositAddressContainer');
+            const addressElement = document.getElementById('depositAddress');
+            const chainNameElement = document.getElementById('chainName');
+
+            if (!chain) {
+                container.classList.add('hidden');
+                return;
+            }
+
+            const addresses = {
+                bsc: '0x742d35Cc6634C0532925a3b844Bc9e7596546f8e',
+                trc: 'TXo4VLN6k1Z5Q8x9Y7mN3oP6qR9sT2vW5',
+                erc: '0x8ba1f109551bD432803012645Hac136c82C3e8C9'
+            };
+
+            addressElement.textContent = addresses[chain];
+            chainNameElement.textContent = chain.toUpperCase();
+            container.classList.remove('hidden');
+            
+            // Start 10-minute timer for deposit confirmation
+            startDepositTimer();
+        }
+
+        function startDepositTimer() {
+            const depositId = Date.now();
+            depositTimers[depositId] = setTimeout(() => {
+                showNotification('Deposit request timed out. Please submit again with valid TxID.', 'error');
+                delete depositTimers[depositId];
+            }, 10 * 60 * 1000); // 10 minutes
+        }
+
+        function submitDeposit() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                return;
+            }
+
+            const chain = document.getElementById('depositChain').value;
+            const amount = parseFloat(document.getElementById('depositAmount').value);
+            const txid = document.getElementById('depositTxid').value.trim();
+
+            if (!chain || !amount || amount < 10 || !txid) {
+                showNotification('Please fill all fields correctly', 'error');
+                return;
+            }
+
+            const deposit = {
+                id: Date.now(),
+                userEmail: currentUser.email,
+                chain: chain,
+                amount: amount,
+                txid: txid,
+                status: 'pending',
+                timestamp: new Date().toISOString()
+            };
+
+            deposits.push(deposit);
+            localStorage.setItem('deposits', JSON.stringify(deposits));
+
+            // Clear timer
+            const depositId = Object.keys(depositTimers)[0];
+            if (depositId) {
+                clearTimeout(depositTimers[depositId]);
+                delete depositTimers[depositId];
+            }
+
+            // Reset form
+            document.getElementById('depositChain').value = '';
+            document.getElementById('depositAmount').value = '';
+            document.getElementById('depositTxid').value = '';
+            document.getElementById('depositAddressContainer').classList.add('hidden');
+
+            showNotification('Deposit request submitted successfully!', 'success');
+            closeModal('depositModal');
+        }
+
+        // Withdrawal Functions
+        function submitWithdrawal() {
+            if (!currentUser) {
+                showNotification('Please login first', 'error');
+                return;
+            }
+
+            const chain = document.getElementById('withdrawChain').value;
+            const address = document.getElementById('withdrawAddress').value.trim();
+            const amount = parseFloat(document.getElementById('withdrawAmount').value);
+            const code2FA = document.getElementById('withdraw2FA').value.trim();
+
+            if (!chain || !address || !amount || amount < 10) {
+                showNotification('Please fill all fields correctly', 'error');
+                return;
+            }
+
+            if (currentUser.balance < amount) {
+                showNotification('Insufficient balance', 'error');
+                return;
+            }
+
+            const withdrawal = {
+                id: Date.now(),
+                userEmail: currentUser.email,
+                chain: chain,
+                address: address,
+                amount: amount,
+                code2FA: code2FA,
+                status: 'pending',
+                timestamp: new Date().toISOString()
+            };
+
+            withdrawals.push(withdrawal);
+            localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+
+            // Deduct from balance
+            currentUser.balance -= amount;
+            saveUserData();
+
+            // Reset form
+            document.getElementById('withdrawChain').value = '';
+            document.getElementById('withdrawAddress').value = '';
+            document.getElementById('withdrawAmount').value = '';
+            document.getElementById('withdraw2FA').value = '';
+
+            showNotification('Withdrawal request submitted successfully!', 'success');
+            closeModal('withdrawModal');
+            updateDashboard();
+        }
+
+        // Admin Functions
+        function handleAdminLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('adminEmail').value;
+            const password = document.getElementById('adminPass').value;
+
+            if (email === admin.email && password === admin.password) {
+                closeModal('adminLoginModal');
+                showAdminPanel();
+                showNotification('Admin login successful!', 'success');
+            } else {
+                showNotification('Invalid admin credentials', 'error');
+            }
+        }
+
+        function updateAdminPanel() {
+            // Update stats
+            const totalUsers = Object.keys(users).length;
+            const totalDeposits = deposits.reduce((sum, d) => sum + d.amount, 0);
+            const totalWithdrawals = withdrawals.reduce((sum, w) => sum + w.amount, 0);
+            const totalMiners = Object.values(users).reduce((sum, user) => sum + user.miners.length, 0);
+
+            document.getElementById('totalUsers').textContent = totalUsers;
+            document.getElementById('totalDeposits').textContent = '$' + totalDeposits.toFixed(2);
+            document.getElementById('totalWithdrawals').textContent = '$' + totalWithdrawals.toFixed(2);
+            document.getElementById('totalMinersAdmin').textContent = totalMiners;
+
+            // Update pending deposits
+            const pendingDeposits = deposits.filter(d => d.status === 'pending');
+            const pendingDepositsContainer = document.getElementById('pendingDeposits');
+            
+            if (pendingDeposits.length === 0) {
+                pendingDepositsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="empty-state-title">No pending deposits</div>
+                        <div class="empty-state-message">
+                            All deposits are up to date
+                        </div>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                pendingDeposits.forEach(deposit => {
+                    html += `
+                        <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: bold; margin-bottom: 5px;">${users[deposit.userEmail]?.name || 'Unknown'}</p>
+                                    <p style="color: #ccc; font-size: 0.9rem;">${deposit.amount} USDT • ${deposit.chain.toUpperCase()}</p>
+                                    <p style="color: #ccc; font-size: 0.8rem;">${deposit.txid.substring(0, 20)}...</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <button class="btn btn-primary" onclick="approveDeposit(${deposit.id})" style="margin-bottom: 5px;">
+                                        Approve
+                                    </button>
+                                    <button class="btn btn-danger" onclick="rejectDeposit(${deposit.id})">
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                pendingDepositsContainer.innerHTML = html;
+            }
+
+            // Update pending withdrawals
+            const pendingWithdrawals = withdrawals.filter(w => w.status === 'pending');
+            const pendingWithdrawalsContainer = document.getElementById('pendingWithdrawals');
+            
+            if (pendingWithdrawals.length === 0) {
+                pendingWithdrawalsContainer.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="empty-state-title">No pending withdrawals</div>
+                        <div class="empty-state-message">
+                            All withdrawals are up to date
+                        </div>
+                    </div>
+                `;
+            } else {
+                let html = '';
+                pendingWithdrawals.forEach(withdrawal => {
+                    html += `
+                        <div style="padding: 15px; background: rgba(255,255,255,0.05); border-radius: 8px; margin-bottom: 10px;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <p style="font-weight: bold; margin-bottom: 5px;">${users[withdrawal.userEmail]?.name || 'Unknown'}</p>
+                                    <p style="color: #ccc; font-size: 0.9rem;">${withdrawal.amount} USDT • ${withdrawal.chain.toUpperCase()}</p>
+                                    <p style="color: #ccc; font-size: 0.8rem;">${withdrawal.address.substring(0, 20)}...</p>
+                                </div>
+                                <div style="text-align: right;">
+                                    <button class="btn btn-primary" onclick="approveWithdrawal(${withdrawal.id})" style="margin-bottom: 5px;">
+                                        Approve
+                                    </button>
+                                    <button class="btn btn-danger" onclick="rejectWithdrawal(${withdrawal.id})">
+                                        Reject
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                pendingWithdrawalsContainer.innerHTML = html;
+            }
+        }
+
+        // Admin Actions
+        function approveDeposit(depositId) {
+            const deposit = deposits.find(d => d.id === depositId);
+            if (deposit && deposit.status === 'pending') {
+                deposit.status = 'approved';
+                localStorage.setItem('deposits', JSON.stringify(deposits));
+                
+                // Add to user balance
+                if (users[deposit.userEmail]) {
+                    users[deposit.userEmail].balance += deposit.amount;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                showNotification('Deposit approved successfully!', 'success');
+                updateAdminPanel();
+            }
+        }
+
+        function rejectDeposit(depositId) {
+            const deposit = deposits.find(d => d.id === depositId);
+            if (deposit && deposit.status === 'pending') {
+                deposit.status = 'rejected';
+                localStorage.setItem('deposits', JSON.stringify(deposits));
+                showNotification('Deposit rejected', 'info');
+                updateAdminPanel();
+            }
+        }
+
+        function approveWithdrawal(withdrawalId) {
+            const withdrawal = withdrawals.find(w => w.id === withdrawalId);
+            if (withdrawal && withdrawal.status === 'pending') {
+                withdrawal.status = 'approved';
+                localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+                showNotification('Withdrawal approved successfully!', 'success');
+                updateAdminPanel();
+            }
+        }
+
+        function rejectWithdrawal(withdrawalId) {
+            const withdrawal = withdrawals.find(w => w.id === withdrawalId);
+            if (withdrawal && withdrawal.status === 'pending') {
+                withdrawal.status = 'rejected';
+                localStorage.setItem('withdrawals', JSON.stringify(withdrawals));
+                
+                // Refund to user balance
+                if (users[withdrawal.userEmail]) {
+                    users[withdrawal.userEmail].balance += withdrawal.amount;
+                    localStorage.setItem('users', JSON.stringify(users));
+                }
+                
+                showNotification('Withdrawal rejected', 'info');
+                updateAdminPanel();
+            }
+        }
+
+        function generateDailyReturns() {
+            Object.values(users).forEach(user => {
+                if (user.miners && user.miners.length > 0) {
+                    let dailyProfit = 0;
+                    user.miners.forEach(miner => {
+                        dailyProfit += miner.dailyReturn;
+                    });
+                    
+                    user.miningBalance += dailyProfit;
+                    user.totalProfit += dailyProfit;
+                }
+            });
+            
+            localStorage.setItem('users', JSON.stringify(users));
+            showNotification('Daily returns generated for all users!', 'success');
+            updateAdminPanel();
+        }
+
+        function exportUserData() {
+            const data = {
+                users: users,
+                deposits: deposits,
+                withdrawals: withdrawals,
+                exchanges: exchanges,
+                timestamp: new Date().toISOString()
+            };
+            
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hashcore-data-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification('User data exported successfully!', 'success');
+        }
+
+        function systemMaintenance() {
+            showNotification('System maintenance mode activated', 'info');
+        }
+
+        function emergencyShutdown() {
+            if (confirm('Are you sure you want to perform an emergency shutdown?')) {
+                showNotification('Emergency shutdown activated!', 'error');
+            }
+        }
+
+        // Utility Functions
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `notification ${type}`;
+            notification.innerHTML = `
+                <i class="fas fa-${type === 'success' ? 'check' : type === 'error' ? 'times' : 'info'}-circle"></i>
+                ${message}
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            navigator.clipboard.writeText(element.textContent).then(() => {
+                showNotification('Copied to clipboard!', 'success');
+            });
+        }
+
+        function copyReferralCode() {
+            copyToClipboard('referralCodeDisplay');
+        }
+
+        function claimDailyBonus() {
+            if (!currentUser) return;
+            
+            const lastBonus = localStorage.getItem('lastDailyBonus');
+            const now = Date.now();
+            const oneDay = 24 * 60 * 60 * 1000;
+            
+            if (lastBonus && (now - parseInt(lastBonus)) < oneDay) {
+                showNotification('Daily bonus already claimed. Come back tomorrow!', 'error');
+                return;
+            }
+            
+            const bonusAmount = 5; // $5 daily bonus
+            currentUser.balance += bonusAmount;
+            localStorage.setItem('lastDailyBonus', now.toString());
+            saveUserData();
+            updateDashboard();
+            showNotification(`Daily bonus claimed: $${bonusAmount} USDT!`, 'success');
+        }
+
+        function downloadAuditReport() {
+            const report = {
+                company: 'HashCore Mining Technologies Pvt. Ltd.',
+                timestamp: new Date().toISOString(),
+                totalUsers: Object.keys(users).length,
+                totalDeposits: deposits.reduce((sum, d) => sum + d.amount, 0),
+                totalWithdrawals: withdrawals.reduce((sum, w) => sum + w.amount, 0),
+                activeMiners: Object.values(users).reduce((sum, user) => sum + user.miners.length, 0),
+                miningStats: {
+                    btcHashrate: 125.8,
+                    ethHashrate: 847.2,
+                    bnbHashrate: 423.6,
+                    trxHashrate: 289.4
+                }
+            };
+            
+            const blob = new Blob([JSON.stringify(report, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `hashcore-audit-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            
+            showNotification('Audit report downloaded successfully!', 'success');
+        }
+
+        function showLegalDoc(type) {
+            showNotification(`${type === 'terms' ? 'Terms & Conditions' : 'Privacy Policy'} document would open here`, 'info');
+        }
+
+        function handleContactForm(event) {
+            event.preventDefault();
+            showNotification('Message sent successfully! We will get back to you soon.', 'success');
+            event.target.reset();
+        }
+
+        // Logout
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            document.getElementById('landingPage').style.display = 'block';
+            document.getElementById('dashboard').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
+            showNotification('Logged out successfully!', 'success');
+        }
+
+        // Check Login Status
+        function checkLoginStatus() {
+            const savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                // Restore email key
+                currentUser.email = Object.keys(users).find(email => users[email].email === currentUser.email) || currentUser.email;
+                showDashboard();
+            }
+        }
+
+        // Save User Data
+        function saveUserData() {
+            if (currentUser && currentUser.email) {
+                users[currentUser.email] = currentUser;
+                localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            }
+        }
+
+        // Custom Amount Modal
+        document.getElementById('customAmount').addEventListener('input', function() {
+            const amount = parseFloat(this.value) || 0;
+            const crypto = document.getElementById('customCrypto').value.toLowerCase();
+            const returns = {
+                btc: 0.0085,
+                eth: 0.012,
+                bnb: 0.0095,
+                trx: 0.011,
+                sol: 0.015
+            };
+            const dailyReturn = amount * returns[crypto];
+            document.getElementById('customReturn').value = `$${dailyReturn.toFixed(2)} / day`;
+        });
+    </script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>HashCore Mining</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#mining">Mining</a></li>
+                        <li><a href="#exchange">Exchange</a></li>
+                        <li><a href="#proof">Mining Proof</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="https://wa.me/13656680075" target="_blank">WhatsApp</a></li>
+                        <li><a href="https://t.me/hashcoremining" target="_blank">Telegram</a></li>
+                        <li><a href="#contact">Email Support</a></li>
+                        <li><a href="#contact">Live Chat</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Legal</h4>
+                    <ul>
+                        <li><a href="#" onclick="showLegalDoc('terms')">Terms & Conditions</a></li>
+                        <li><a href="#" onclick="showLegalDoc('privacy')">Privacy Policy</a></li>
+                        <li><a href="#" onclick="showLegalDoc('refund')">Refund Policy</a></li>
+                        <li><a href="#" onclick="showLegalDoc('kyc')">KYC Policy</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul>
+                        <li>Email: kaitoreignx@gmail.com</li>
+                        <li>Phone: +1 365 668 0075</li>
+                        <li>Registered: Mumbai, India</li>
+                        <li>Company: HashCore Mining Technologies Pvt. Ltd.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 HashCore Mining Technologies Pvt. Ltd. All rights reserved. | Registration No: U74999MH2023PTC123456</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
